@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/Login.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/Json/JsonCoursesReader.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/Json/JsonUserReader.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/User/UserProcess.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/User/User.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/User/Instructor.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/User/InstructorRole.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/User/Student.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/User/StudentRole.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/ViewCourses.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/ViewStudents.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/StudentBoard.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/Signup.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/InstructorBoard.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/EnrollCourses.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/CourseLessonManager.java</file>
+            <file>file:/N:/Term%205/Lab%207/Lab7_SkillForge-master/src/GUI/CompleteLesson.java</file>
+        </group>
+    </open-files>
+</project-private>
