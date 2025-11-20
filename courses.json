@@ -1,0 +1,62 @@
+[
+  {
+    "courseId": "C3001",
+    "title": "Introduction to Java",
+    "instructorId": "U2001",
+    "description": "Learn Java basics, OOP, and problem solving.",
+    "approvalStatus": "APPROVED",
+    "lessons": [
+      {
+        "lessonId": "L1",
+        "title": "Java Basics",
+        "content": "Variables, data types, operations...",
+        "quiz": {
+          "questions": [
+            {
+              "question": "Which of these is a Java keyword?",
+              "options": ["var", "int", "define"],
+              "correctAnswer": "int"
+            },
+            {
+              "question": "What is 5 + 3?",
+              "options": ["6", "8", "9"],
+              "correctAnswer": "8"
+            }
+          ]
+        }
+      },
+      {
+        "lessonId": "L2",
+        "title": "Object-Oriented Programming",
+        "content": "Classes, objects, inheritance...",
+        "quiz": {
+          "questions": [
+            {
+              "question": "What does OOP stand for?",
+              "options": ["Object-Oriented Programming", "Only Open Programs"],
+              "correctAnswer": "Object-Oriented Programming"
+            }
+          ]
+        }
+      }
+    ],
+    "studentsEnrolled": ["U3001"],
+    "performanceStats": {
+      "avgLessonScores": {
+        "L1": 85,
+        "L2": 70
+      }
+    }
+  },
+
+  {
+    "courseId": "C3002",
+    "title": "Data Structures",
+    "instructorId": "U2001",
+    "description": "Learn lists, stacks, queues, and trees.",
+    "approvalStatus": "PENDING",
+    "lessons": [],
+    "studentsEnrolled": [],
+    "performanceStats": {}
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "U1001",
+    "name": "Admin User",
+    "email": "admin@skillforge.com",
+    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "role": "ADMIN",
+    "certificates": []
+  },
+
+  {
+    "id": "U2001",
+    "name": "John Instructor",
+    "email": "john@skillforge.com",
+    "password": "ef92e9837f28f0c5d93e7bdae5e7dbf46d49af919f0bcb9fe90e92b455e48f14",
+    "role": "INSTRUCTOR",
+    "coursesCreated": ["C3001"],
+    "insights": {
+      "C3001": {
+        "avgQuizScore": 78,
+        "completionRate": 62
+      }
+    }
+  },
+
+  {
+    "id": "U3001",
+    "name": "Student A",
+    "email": "studentA@skillforge.com",
+    "password": "a8282415f7cf0e653b4e7c88fc29cfaf2945a2bbf7b9b86f8c6c63b8c1e44c1c",
+    "role": "STUDENT",
+    "enrolledCourses": ["C3001"],
+    "progress": {
+      "C3001": {
+        "lessonProgress": [
+          {
+            "lessonId": "L1",
+            "quizScore": 90,
+            "completed": true
+          },
+          {
+            "lessonId": "L2",
+            "quizScore": 70,
+            "completed": false
+          }
+        ],
+        "courseCompleted": false
+      }
+    },
+    "certificates": []
+  }
+]
