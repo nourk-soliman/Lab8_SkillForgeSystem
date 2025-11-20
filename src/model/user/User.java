@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model.user;
+package User;
 
 /**
  *
@@ -82,15 +82,8 @@ public class User {
         throw new IllegalArgumentException("Password must contain at least one special character (!@#$%^&*())");
     }
     // Hash the password
-    try {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] hashBytes = md.digest(passwordHash.getBytes());
-        StringBuilder hex = new StringBuilder();
-        for (byte b : hashBytes) hex.append(String.format("%02x", b));
-        this.passwordHash = hex.toString();
-    } catch (Exception e) {
-        throw new RuntimeException("Error hashing password", e);
-    }
+    UserService r= new UserService();
+    this.passwordHash= r.hashPassword(passwordHash);
     }
 
     public int getUserId() {
@@ -116,5 +109,3 @@ public class User {
     }
 
 }
-
-
