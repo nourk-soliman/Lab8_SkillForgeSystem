@@ -2,13 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui.loginAndSignUp;
+package GUI;
 
-import gui.dashboards.InstructorBoard;
-import gui.dashboards.StudentBoard;
-import model.user.Instructor;
-import model.user.Student;
-import logic.authentication.UserProcess;
+import User.Instructor;
+import User.PasswordService;
+import User.Student;
+import User.UserService;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,11 +17,13 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
+     private final UserService userService;
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login(UserService userService) {
+        this.userService = userService;
         initComponents();
     }
 
@@ -266,8 +267,7 @@ public class Login extends javax.swing.JFrame {
 
         // Process Student login
         if (role.contains("Student")) {
-            UserProcess r = new UserProcess();
-            Student str = r.validateStudent(name, password);
+            Student str = userService.validateStudent(name, password);
 
             if (str == null) {
                 JOptionPane.showMessageDialog(null, "Invalid Username or password");
@@ -280,8 +280,7 @@ public class Login extends javax.swing.JFrame {
         }
         // Process Instructor login
         else if (role.contains("Instructor")) {
-            UserProcess r = new UserProcess();
-            Instructor inst = r.validateInstructor(name, password);
+            Instructor inst = userService.validateInstructor(name, password);
 
             if (inst == null) {
                 JOptionPane.showMessageDialog(null, "Invalid username or password");
@@ -318,7 +317,7 @@ public class Login extends javax.swing.JFrame {
 
     private void bsignupActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        new Signup().setVisible(true);
+        new Signup(userService).setVisible(true);
         this.dispose();
 
     }
@@ -326,7 +325,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+      public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
         // (optional) ">
@@ -349,7 +348,12 @@ public class Login extends javax.swing.JFrame {
         // </editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            // CREATE UserService ONCE here and pass it to Login
+            PasswordService passwordService = new PasswordService();
+            UserService userService = new UserService(passwordService);
+            new Login(userService).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify
