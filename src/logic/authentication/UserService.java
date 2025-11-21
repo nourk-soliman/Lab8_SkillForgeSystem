@@ -3,12 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package logic.authentication;
-import model.user.Student;
-import model.user.Instructor;
+
+import Json.UsersDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import Json.UsersDatabase;
+import model.user.Instructor;
+import model.user.Student;
 
 /**
  *
@@ -26,14 +27,14 @@ public class UserService {
     }
 
     private void loadFromFile() {
-        UsersDatabase json = new UsersDatabase("users.json");
+       UsersDatabase json = new  UsersDatabase ("users.json");
         this.students = json.getStudents();
         this.instructors = json.getInstructors();
         System.out.println("Done here");
     }
 
     private void saveToFile() {
-       UsersDatabase json = new UsersDatabase("users.json");
+         UsersDatabase  json = new  UsersDatabase ("users.json");
         json.setStudents(students);
         json.setInstructors(instructors);
         json.saveToFile("users.json");
@@ -59,6 +60,27 @@ public class UserService {
             return st;
         }
     }
+        public Instructor validateInstructor(String username, String password) {
+        Instructor inst = null;
+        for (Instructor i : instructors) {
+            if (i.getUserName().equals(username)) {
+                inst = i;
+                break;
+            }
+        }
+        
+        if (inst == null) {
+            return null;
+        }
+
+        if (!passwordService.isValidPassword(password, inst.getPasswordHash())) {
+            System.out.println("Couldn't validate password");
+            return null;
+        } else {
+            return inst;
+        }
+    }
+
     
         public Student SignUpStudent(String username, String email, String password) {
          Random random = new Random();
