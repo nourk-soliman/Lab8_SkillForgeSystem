@@ -106,27 +106,27 @@ public class UserService {
         return student;
     }
         
-        public Instructor signupInstructor(String username, String email, String password){
-        Random random = new Random();
-        int id;
-        boolean idExists = false;
-        do {
-            id = random.nextInt(100, 10000);
-
-            for (Instructor s : instructors) {
-                if (s.getUserId() == id) { // Check if ID already exists
-                    idExists = true;
-                    break;
-                }
+       public Instructor signupInstructor(String username, String email, String password){
+    Random random = new Random();
+    int id;
+    boolean idExists = false;
+    do {
+        id = random.nextInt(100, 10000);
+        for (Instructor s : instructors) {
+            if (s.getUserId() == id) {
+                idExists = true;
+                break;
             }
-        } while (idExists);
-       String hashedPassword = passwordService.hashPassword(password);
-       Instructor instructor = new Instructor(id, username, email, password);
-       
-       instructors.add(instructor);
-       saveToFile();
-       return instructor;
-        
-        }  
+        }
+    } while (idExists);
+    
+    String hashedPassword = passwordService.hashPassword(password);
+    // FIX: Use hashedPassword, not raw password
+    Instructor instructor = new Instructor(id, username, email, hashedPassword);
+   
+    instructors.add(instructor);
+    saveToFile();
+    return instructor;
+}
     }
 
