@@ -1,27 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package User;
+package model.user;
 
 /**
  *
  * @author Mariam Yamen
  */
-import java.security.MessageDigest;
-
 public class User {
     private int userId;
     private String username;
     private String email;
     private String passwordHash;
+    
     public User(int userId, String userName, String email, String passwordHash) {
         setUserId(userId);
         setUserName(userName);
         setEmail(email);
         setPasswordHash(passwordHash);
     }
-    public User(){};
+    
+    public User(){}
+    
     //------------------------ID Validation------------------------//
     public void setUserId(int userId) {
         if (userId <= 0){
@@ -29,6 +26,7 @@ public class User {
         }
         this.userId = userId;
     }
+    
     //------------------------Name Validation------------------------//
     public void setUserName(String userName) {
         if (userName == null || userName.trim().isEmpty()) {
@@ -39,65 +37,39 @@ public class User {
                 throw new IllegalArgumentException("Name can only contain letters and spaces");
             }
         }
-
         this.username = userName;
     }
 
-    //------------------------Emial Validation------------------------//
+    //------------------------Email Validation------------------------//
     public void setEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("Email cannot be empty");
         }
-
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z0-9]+$")) {
             throw new IllegalArgumentException("Invalid email format");
         }
         this.email = email;
     }
+    
     //------------------------Password Validation------------------------//
-  public void setPasswordHash(String passwordHash) {
-    // Check if already hashed (SHA-256 format)
-    if (passwordHash.matches("^[a-fA-F0-9]{64}$")) {
+    public void setPasswordHash(String passwordHash) {
+        // REMOVED: Password hashing logic - that's PasswordService's job
+        // REMOVED: UserService creation - that's dependency injection
         this.passwordHash = passwordHash;
-        return;
-    }
-
-    // Validate raw password
-    if (passwordHash == null || passwordHash.trim().isEmpty()) {
-        throw new IllegalArgumentException("Password cannot be empty");
-    }
-    if (passwordHash.length() < 8) {
-        throw new IllegalArgumentException("Password must be at least 8 characters long");
-    }
-    if (!passwordHash.matches(".*[A-Z].*")) {
-        throw new IllegalArgumentException("Password must contain at least one uppercase letter");
-    }
-    if (!passwordHash.matches(".*[a-z].*")) {
-        throw new IllegalArgumentException("Password must contain at least one lowercase letter");
-    }
-    if (!passwordHash.matches(".*\\d.*")) {
-        throw new IllegalArgumentException("Password must contain at least one digit");
-    }
-    if (!passwordHash.matches(".*[!@#$%^&*()].*")) {
-        throw new IllegalArgumentException("Password must contain at least one special character (!@#$%^&*())");
-    }
-    // Hash the password
-    UserService r= new UserService();
-    this.passwordHash= r.hashPassword(passwordHash);
     }
 
     public int getUserId() {
         return userId;
     }
 
-    public String getEmial()
-    {
+    public String getEmail() {  // Fixed typo: getEmial -> getEmail
         return email;
     }
 
     public String getPasswordHash() {
        return passwordHash; 
     }
+    
     public String getUserName() {
         return username;
     }
@@ -107,5 +79,4 @@ public class User {
         System.out.println("Username: " + username);
         System.out.println("Email: " + email);
     }
-
 }

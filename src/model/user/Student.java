@@ -2,7 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import json.JsonUserReader;
+import json.JsonUserDatabase;
 
 public class Student extends User {
 

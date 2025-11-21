@@ -5,7 +5,7 @@
 package model.user;
 import java.util.ArrayList;
 import java.util.List;
-import json.JsonUserReader;
+import json.JsonUserDatabase;
 import model.user.Student;
 
 /**
@@ -28,7 +28,7 @@ public class Instructor extends User  {
     
     @Override
     public void setUserId(int id)
-    {JsonUserReader r=new JsonUserReader("users.json");
+    {JsonUserDatabase r=new JsonUserDatabase("users.json");
     List<Instructor>i=r.getInstructors();
     for(Instructor instructor:i)
     {if(instructor.getUserId()==id) {System.out.println("User ID must be unique."); return;}}
