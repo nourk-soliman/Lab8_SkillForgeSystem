@@ -4,7 +4,7 @@
  */
 package logic.authentication;
 
-import Json.UsersDatabase;
+import json.JsonUserDatabase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,14 +27,14 @@ public class UserService {
     }
 
     private void loadFromFile() {
-       UsersDatabase json = new  UsersDatabase ("users.json");
+       JsonUserDatabase json = new  JsonUserDatabase ("users.json");
         this.students = json.getStudents();
         this.instructors = json.getInstructors();
         System.out.println("Done here");
     }
 
     private void saveToFile() {
-         UsersDatabase  json = new  UsersDatabase ("users.json");
+         JsonUserDatabase  json = new  JsonUserDatabase ("users.json");
         json.setStudents(students);
         json.setInstructors(instructors);
         json.saveToFile("users.json");
