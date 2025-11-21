@@ -192,7 +192,7 @@ public class PendingList extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Course approved: " + courseTitle, "Success",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            // إعادة تحميل الجدول بعد التحديث
+            
             viewPendingCourses(a);
 
         } catch (Exception e) {
