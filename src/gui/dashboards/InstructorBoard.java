@@ -4,12 +4,14 @@
 */
 package gui.dashboards;
 
-import json.JsonUserReader;
+import Json.UsersDatabase;
 import gui.instructor.CourseLessonManager;
 import gui.loginAndSignUp.Login;
 import gui.instructor.ViewStudents;
 import model.user.Instructor;
 import java.util.List;
+import logic.authentication.PasswordService;
+import logic.authentication.UserService;
 
 /**
  *
@@ -173,7 +175,9 @@ public class InstructorBoard extends javax.swing.JFrame {
 
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             this.dispose();
-            new Login().setVisible(true);
+            PasswordService p=new PasswordService();
+            UserService u=new UserService(p);
+            new Login(u).setVisible(true);
         }
     }// GEN-LAST:event_jButtonLogoutActionPerformed
 
