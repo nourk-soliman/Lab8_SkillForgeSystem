@@ -4,7 +4,7 @@
  */
 package gui.dashboards;
 
-import Json.UsersDatabase;
+import json.JsonUserDatabase;
 import gui.student.CompleteLesson;
 import gui.student.EnrollCourses;
 import gui.loginAndSignUp.Login;
