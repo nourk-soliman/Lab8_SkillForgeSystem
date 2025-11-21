@@ -92,4 +92,3 @@ public class JsonUserDatabase extends JsonHandler {
         this.instructors = instructors;
     }
 }
-
