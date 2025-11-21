@@ -1,4 +1,4 @@
-package Json;
+package json;
 import json.JsonHandler;
 import model.user.Instructor;
 import model.user.Student;
@@ -92,3 +92,4 @@ public class JsonUserDatabase extends JsonHandler {
         this.instructors = instructors;
     }
 }
+
