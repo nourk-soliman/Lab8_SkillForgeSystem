@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+package gui.loginAndSignUp;
 
-import User.Instructor;
-import User.PasswordService;
-import User.Student;
-import User.UserService;
+import gui.dashboards.InstructorBoard;
+import gui.dashboards.StudentBoard;
+import model.user.Instructor;
+import logic.authentication.PasswordService;
+import model.user.Student;
+import logic.authentication.UserService;
 import javax.swing.JOptionPane;
 
 /**
