@@ -1,7 +1,7 @@
 package Json;
-import Json.JsonHandler;
-import User.Instructor;
-import User.Student;
+import json.JsonHandler;
+import model.user.Instructor;
+import model.user.Student;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -11,6 +11,10 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Mariam Yamen
+ */
 public class JsonUserDatabase extends JsonHandler {
 
     private List<Student> students = new ArrayList<>();

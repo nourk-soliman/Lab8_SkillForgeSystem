@@ -4,11 +4,12 @@
  */
 package Json;
 
-import Courses.Course;
-import Courses.Lesson;
+import json.JsonHandler;
 import com.google.gson.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.course.Course;
+import model.course.Lesson;
 
 public class JsonCoursesDatabase extends JsonHandler {
 
