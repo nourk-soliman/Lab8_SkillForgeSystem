@@ -2,8 +2,9 @@
   {
     "courseId": "CS101",
     "title": "Python",
-    "instructorId": 9657,
     "description": "An introductory course to Python programming.",
+    "instructorId": 9657,
+    "approvalStatus": "APPROVED",
     "lessons": [
       {
         "lessonId": "py1",
@@ -17,25 +18,15 @@
           "questions": [
             {
               "question": "What is the file extension for a Python script?",
-              "answerIndex": 0,
-              "options": [
-                ".java",
-                ".py",
-                ".exe"
-              ]
+              "options": [".java", ".py", ".exe"],
+              "answerIndex": 1
             },
             {
               "question": "Which command runs a Python file?",
-              "answerIndex": 0,
-              "options": [
-                "python file.py",
-                "run file",
-                "execute file"
-              ]
+              "options": ["python file.py", "run file", "execute file"],
+              "answerIndex": 0
             }
-          ],
-          "passingScore": 70,
-          "timeLimit": 0
+          ]
         }
       },
       {
@@ -50,26 +41,26 @@
           "questions": [
             {
               "question": "Which of the following is a valid Python variable?",
-              "answerIndex": 0,
-              "options": [
-                "2name",
-                "name2",
-                "name-1"
-              ]
+              "options": ["2name", "name2", "name-1"],
+              "answerIndex": 1
             }
-          ],
-          "passingScore": 70,
-          "timeLimit": 0
+          ]
         }
       }
     ],
-    "approvalStatus": "APPROVED"
+    "Students": [1234, 3456],
+    "performanceStats": {
+      "averageScore": 88,
+      "completionRate": 70
+    }
   },
+
   {
     "courseId": "DR202",
     "title": "Learn how to drive",
-    "instructorId": 9657,
     "description": "A comprehensive course on driving skills and road safety.",
+    "instructorId": 9657,
+    "approvalStatus": "PENDING",
     "lessons": [
       {
         "lessonId": "ds1",
@@ -83,16 +74,10 @@
           "questions": [
             {
               "question": "What does a red octagon sign mean?",
-              "answerIndex": 0,
-              "options": [
-                "Stop",
-                "Yield",
-                "Turn Right"
-              ]
+              "options": ["Stop", "Yield", "Turn Right"],
+              "answerIndex": 0
             }
-          ],
-          "passingScore": 70,
-          "timeLimit": 0
+          ]
         }
       },
       {
@@ -107,75 +92,73 @@
           "questions": [
             {
               "question": "Which foot is used for the brake pedal?",
-              "answerIndex": 0,
-              "options": [
-                "Left",
-                "Right"
-              ]
+              "options": ["Left", "Right"],
+              "answerIndex": 1
             }
-          ],
-          "passingScore": 70,
-          "timeLimit": 0
+          ]
         }
       }
     ],
-    "approvalStatus": "PENDING"
+    "Students": [3456],
+    "performanceStats": {
+      "averageScore": 75,
+      "completionRate": 40
+    }
   },
+
   {
-    "courseId": "cce",
-    "title": "ds",
-    "instructorId": 3640,
-    "description": "sd",
+    "courseId": "CS103",
+    "title": "Java Basics",
+    "description": "A beginner-friendly introduction to Java programming.",
+    "instructorId": 9667,
+    "approvalStatus": "APPROVED",
     "lessons": [
       {
-        "lessonId": "dsf",
-        "title": "sdf",
-        "content": "dsf",
-        "optionalResources": [],
+        "lessonId": "j1",
+        "title": "Introduction to Java",
+        "content": "Covers the purpose of Java, how the JVM works, and basic program structure.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/getStarted/intro/index.html",
+          "https://www.w3schools.com/java/java_intro.asp"
+        ],
         "quiz": {
-          "quizId": "cce_dsf_quiz",
           "questions": [
             {
-              "questionId": "cce_dsf_quiz_q1",
-              "question": "name",
-              "answerIndex": 2,
-              "options": [
-                "assa",
-                "asas",
-                "asas",
-                "asas"
-              ]
+              "question": "Which keyword is used to define a class in Java?",
+              "options": ["class", "define", "struct"],
+              "answerIndex": 0
+            },
+            {
+              "question": "Which method is the entry point of a Java program?",
+              "options": ["start()", "run()", "main()"],
+              "answerIndex": 2
             }
-          ],
-          "passingScore": 70,
-          "timeLimit": 0
+          ]
         }
       },
       {
-        "lessonId": "dfs",
-        "title": "dsf",
-        "content": "dsf",
-        "optionalResources": [],
+        "lessonId": "j2",
+        "title": "Variables and Data Types",
+        "content": "Explains integers, doubles, booleans, characters, and Strings.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html",
+          "https://www.geeksforgeeks.org/data-types-in-java/"
+        ],
         "quiz": {
-          "quizId": "cce_dfs_quiz",
           "questions": [
             {
-              "questionId": "cce_dfs_quiz_q1",
-              "question": "esmak eh",
-              "answerIndex": 1,
-              "options": [
-                "moaz",
-                "refaat",
-                "ali"
-              ]
+              "question": "Which of the following is NOT a Java primitive type?",
+              "options": ["int", "String", "boolean"],
+              "answerIndex": 1
             }
-          ],
-          "passingScore": 40,
-          "timeLimit": 0
+          ]
         }
       }
     ],
-    "students": [],
-    "approvalStatus": "PENDING"
+    "Students": [1234, 3446],
+    "performanceStats": {
+      "averageScore": 82,
+      "completionRate": 60
+    }
   }
 ]

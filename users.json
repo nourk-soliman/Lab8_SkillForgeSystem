@@ -4,11 +4,28 @@
       "CS103"
     ],
     "completedLessons": [],
-    "quizResults": {},
+    "progress": [
+      {
+        "courseId": "CS103",
+        "lessonProgress": [
+          {
+            "lessonId": "L1",
+            "quizScore": 85.0,
+            "completed": true
+          },
+          {
+            "lessonId": "L2",
+            "quizScore": 0.0,
+            "completed": false
+          }
+        ],
+        "completed": false
+      }
+    ],
     "userId": 1234,
     "username": "Salma",
     "email": "mss12@gmail.com",
-    "passwordHash": "f7c3bc1d808e04732adf679965ccc34ca7ae3441f0f1c1468e8d7f0a0f8f0f0c",
+    "passwordHash": "d444b274fac69a6a33f580168d2bd0b27f66da2ca95c887eeec971a1932e226b",
     "role": "student"
   },
   {
@@ -17,11 +34,33 @@
       "DR202"
     ],
     "completedLessons": [],
-    "quizResults": {},
+    "progress": [
+      {
+        "courseId": "CS101",
+        "lessonProgress": [
+          {
+            "lessonId": "L1",
+            "quizScore": 92.0,
+            "completed": true
+          },
+          {
+            "lessonId": "L2",
+            "quizScore": 88.0,
+            "completed": true
+          }
+        ],
+        "completed": false
+      },
+      {
+        "courseId": "DR202",
+        "lessonProgress": [],
+        "completed": false
+      }
+    ],
     "userId": 3456,
     "username": "Samer",
     "email": "samer123@gmail.com",
-    "passwordHash": "2c74fd17edafd80e8447b0d46741ee243b7eb74dd2149a0f0eea5c9f0f8e5a3c",
+    "passwordHash": "2ec20814fed5cce8b20ffa7b6843789f4ee5b6a68f8343011da3f730ebea8f44",
     "role": "student"
   },
   {
@@ -30,7 +69,24 @@
       "DR204"
     ],
     "completedLessons": [],
-    "quizResults": {},
+    "progress": [
+      {
+        "courseId": "CS103",
+        "lessonProgress": [
+          {
+            "lessonId": "L1",
+            "quizScore": 78.0,
+            "completed": true
+          }
+        ],
+        "completed": false
+      },
+      {
+        "courseId": "DR204",
+        "lessonProgress": [],
+        "completed": false
+      }
+    ],
     "userId": 3446,
     "username": "Nour",
     "email": "nour123@gmail.com",
@@ -41,11 +97,14 @@
     "enrolledCourses": [
       "CS101"
     ],
-    "completedLessons": [],
-    "userId": 3476,
-    "username": "student",
-    "email": "dsa@sad.das",
-    "passwordHash": "9874d38de575fe17cc1201d7e7dc2fdd6e5b1c83f3fe43909257009a9073c63c",
+    "completedLessons": [
+      "CS101:py1"
+    ],
+    "progress": [],
+    "userId": 6144,
+    "username": "Nour",
+    "email": "nour@gmail.com",
+    "passwordHash": "90174ca2e4fff988f21695c8641c2ce1693c231c074cc64ff953d6fe42ff3868",
     "role": "student"
   },
   {
@@ -84,16 +143,6 @@
     "username": "hoda",
     "email": "hoda@gmail.com",
     "passwordHash": "1bc177f34b19b0022484b3aa1016f48d058df23968ac07884b4cd1c3ab003f50",
-    "role": "instructor"
-  },
-  {
-    "createdCourses": [
-      "cce"
-    ],
-    "userId": 3640,
-    "username": "moaz",
-    "email": "moaz@gmail.com",
-    "passwordHash": "9874d38de575fe17cc1201d7e7dc2fdd6e5b1c83f3fe43909257009a9073c63c",
     "role": "instructor"
   },
   {
