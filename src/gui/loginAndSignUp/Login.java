@@ -7,7 +7,6 @@ package gui.loginAndSignUp;
 import gui.dashboards.AdminBoard;
 import gui.dashboards.InstructorBoard;
 import gui.dashboards.StudentBoard;
-
 import model.user.Instructor;
 import logic.authentication.PasswordService;
 import model.user.Student;

@@ -6,7 +6,6 @@ package gui.loginAndSignUp;
 
 import gui.dashboards.InstructorBoard;
 import gui.dashboards.StudentBoard;
-
 import model.user.Instructor;
 import logic.authentication.PasswordService;
 import model.user.Student;
@@ -21,9 +20,12 @@ public class Signup extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Signup.class.getName());
     private final UserService userService;
-    
+
+    /**
+     * Creates new form Signup
+     */
     public Signup(UserService userservice) {
-        this.userService= userservice;
+        this.userService = userservice;
         initComponents();
     }
 
@@ -292,36 +294,37 @@ public class Signup extends javax.swing.JFrame {
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bloginActionPerformed
         // TODO add your handling code here:
-         if (jusername.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Please Fill out the username");
-    } else if (jpassword.getPassword().length == 0) {
-        JOptionPane.showMessageDialog(null, "Please enter the password field");
-    } else if (jemail.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Please fill out the email");
-    } else {
-        String role = lchoices.getSelectedItem().toString();
-        String name = jusername.getText();
-        String password = new String(jpassword.getPassword());
-        String email = jemail.getText();
-        
-        // Add basic validation
-        if (password.length() < 6) {
-            JOptionPane.showMessageDialog(null, "Password must be at least 6 characters");
-            return;
-        }
-        
-        if (!email.contains("@") || !email.contains(".")) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid email address");
-            return;
-        }
-        
+        if (jusername.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please Fill out the username");
+        } else if (jusername.getText().matches(".*[0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+            JOptionPane.showMessageDialog(null, "Username cannot contain numbers or special characters");
+        } else if (jpassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(null, "Please enter the password field");
+        } else if (jemail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please fill out the email");
+        } else {
+            String role = lchoices.getSelectedItem().toString();
+            String name = jusername.getText();
+            String password = new String(jpassword.getPassword());
+            String email = jemail.getText();
+
+            // Add basic validation
+            if (password.length() < 6) {
+                JOptionPane.showMessageDialog(null, "Password must be at least 6 characters");
+                return;
+            }
+
+            if (!email.contains("@") || !email.contains(".")) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid email address");
+                return;
+            }
+
             if (role.contains("Student")) {
-                
+
                 Student str = userService.signUpStudent(name, email, password);
                 if (str == null) {
                     JOptionPane.showMessageDialog(null, "Account Already Exists! please Login");
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Signup is successfull! Please login.");
                     StudentBoard studentBoard = new StudentBoard(str);
                     studentBoard.setVisible(true);
@@ -373,7 +376,7 @@ public class Signup extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
         // (optional) ">
