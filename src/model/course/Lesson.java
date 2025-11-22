@@ -4,9 +4,11 @@
  */
 package model.course;
 
-import json.JsonCoursesDatabase;
+import Json.CoursesDatabase;
+import model.user.Instructor;
 import java.util.ArrayList;
 import java.util.List;
+import model.quiz.Quiz;
 
 /**
  *
@@ -17,14 +19,16 @@ public class Lesson {
     private String title;
     private String content;
     private List<String> optionalResources;
+    private Quiz quiz;
 
-    public Lesson(String lessonId, String title, String content, List<String> optionalResources) {
+    public Lesson(String lessonId, String title, String content, List<String> optionalResources, Quiz quiz) {
      
         setLessonId(lessonId);
        
         this.title = title;
         this.content = content;
         this.optionalResources = optionalResources;
+        this.quiz=quiz;
     }
 
     public String getLessonId() {
@@ -33,7 +37,7 @@ public class Lesson {
 
  public void setLessonId(String lessonId) {
 
-    JsonCoursesDatabase r = new JsonCoursesDatabase("courses.json");
+    CoursesDatabase r = new CoursesDatabase("courses.json");
     List<Lesson> lessons = r.getLessons();
 
     for (Lesson lesson : lessons) {
@@ -70,6 +74,12 @@ public class Lesson {
         this.optionalResources = optionalResources;
     }
     
+    public Quiz getQuiz()
+    {return quiz;}
+    
+   public void setQuiz(Quiz quiz)
+   {this.quiz=quiz;}
+   
     public void displayInfo()
     { System.out.println("=== Lesson Info ===");
         
@@ -86,8 +96,8 @@ public class Lesson {
     
     }
     
-    public static void main(String[] args) {
-        JsonCoursesDatabase r=new JsonCoursesDatabase("courses.json");
+    /*public static void main(String[] args) {
+        CoursesDatabase r=new CoursesDatabase("courses.json");
     List<Lesson>l=r.getLessons();
        for(Lesson lesson:l)
            lesson.displayInfo();
@@ -96,5 +106,5 @@ public class Lesson {
        l.add(new Lesson("dt1","Nour","That's me",opt)); 
        for(Lesson lesson:l)
            lesson.displayInfo();
-    }
+    }*/
 }
