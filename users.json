@@ -1,10 +1,102 @@
 [
   {
-    "userId": 9999,
-    "username": "Admin1",
-    "email": "admin@skillforge.com",
-    "passwordHash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
-    "role": "admin",
+    "enrolledCourses": [
+      "CS103"
+    ],
+    "completedLessons": [],
+    "quizResults": {},
+    "userId": 1234,
+    "username": "Salma",
+    "email": "mss12@gmail.com",
+    "passwordHash": "f7c3bc1d808e04732adf679965ccc34ca7ae3441f0f1c1468e8d7f0a0f8f0f0c",
+    "role": "student"
+  },
+  {
+    "enrolledCourses": [
+      "CS101",
+      "DR202"
+    ],
+    "completedLessons": [],
+    "quizResults": {},
+    "userId": 3456,
+    "username": "Samer",
+    "email": "samer123@gmail.com",
+    "passwordHash": "2c74fd17edafd80e8447b0d46741ee243b7eb74dd2149a0f0eea5c9f0f8e5a3c",
+    "role": "student"
+  },
+  {
+    "enrolledCourses": [
+      "CS103",
+      "DR204"
+    ],
+    "completedLessons": [],
+    "quizResults": {},
+    "userId": 3446,
+    "username": "Nour",
+    "email": "nour123@gmail.com",
+    "passwordHash": "2c74fd17edwafd80e8447b0d46741ee243b7eb74dd2149a0f0eea5c9f0f8e5a3c",
+    "role": "student"
+  },
+  {
+    "enrolledCourses": [
+      "CS101"
+    ],
+    "completedLessons": [],
+    "userId": 3476,
+    "username": "student",
+    "email": "dsa@sad.das",
+    "passwordHash": "9874d38de575fe17cc1201d7e7dc2fdd6e5b1c83f3fe43909257009a9073c63c",
+    "role": "student"
+  },
+  {
+    "createdCourses": [
+      "CS101",
+      "DR202"
+    ],
+    "userId": 9657,
+    "username": "Ali",
+    "email": "ali23@gmail.com",
+    "passwordHash": "90174ca2e4fff988f21695c8641c2ce1693c231c074cc64ff953d6fe42ff3868",
+    "role": "instructor"
+  },
+  {
+    "createdCourses": [
+      "CS103",
+      "DR204"
+    ],
+    "userId": 9667,
+    "username": "Gamal",
+    "email": "gamal23@gmail.com",
+    "passwordHash": "01a0eedaf62153cf1acefc6322866e67b3dc78c10ed7626ec6d8fe508c589b79",
+    "role": "instructor"
+  },
+  {
+    "createdCourses": [],
+    "userId": 3956,
+    "username": "Mariam",
+    "email": "mariam@hotmail.com",
+    "passwordHash": "90174ca2e4fff988f21695c8641c2ce1693c231c074cc64ff953d6fe42ff3868",
+    "role": "instructor"
+  },
+  {
+    "createdCourses": [],
+    "userId": 2145,
+    "username": "hoda",
+    "email": "hoda@gmail.com",
+    "passwordHash": "1bc177f34b19b0022484b3aa1016f48d058df23968ac07884b4cd1c3ab003f50",
+    "role": "instructor"
+  },
+  {
+    "createdCourses": [
+      "cce"
+    ],
+    "userId": 3640,
+    "username": "moaz",
+    "email": "moaz@gmail.com",
+    "passwordHash": "9874d38de575fe17cc1201d7e7dc2fdd6e5b1c83f3fe43909257009a9073c63c",
+    "role": "instructor"
+  },
+  {
     "managedApprovals": [
       {
         "courseId": "CS103",
@@ -16,150 +108,11 @@
         "action": "REJECTED",
         "date": "2025-11-21"
       }
-    ]
-  },
-
-  {
-    "userId": 1234,
-    "username": "Salma",
-    "email": "mss12@gmail.com",
-    "passwordHash": "f7c3bc1d808e04732adf679965ccc34ca7ae3441f0f1c1468e8d7f0a0f8f0f0c",
-    "role": "student",
-    "enrolledCourses": ["CS103"],
-    "progress": {
-      "CS103": {
-        "lessonProgress": [
-          {
-            "lessonId": "L1",
-            "quizScore": 85,
-            "completed": true
-          },
-          {
-            "lessonId": "L2",
-            "quizScore": 0,
-            "completed": false
-          }
-        ],
-        "courseCompleted": false
-      }
-    },
-    "certificates": []
-  },
-
-  {
-    "userId": 3456,
-    "username": "Samer",
-    "email": "samer123@gmail.com",
-    "passwordHash": "2c74fd17edafd80e8447b0d46741ee243b7eb74dd2149a0f0eea5c9f0f8e5a3c",
-    "role": "student",
-    "enrolledCourses": ["CS101", "DR202"],
-    "progress": {
-      "CS101": {
-        "lessonProgress": [
-          {
-            "lessonId": "L1",
-            "quizScore": 92,
-            "completed": true
-          },
-          {
-            "lessonId": "L2",
-            "quizScore": 88,
-            "completed": true
-          }
-        ],
-        "courseCompleted": true
-      },
-      "DR202": {
-        "lessonProgress": [],
-        "courseCompleted": false
-      }
-    },
-    "certificates": [
-      {
-        "certificateId": "CERT-2025-001",
-        "courseId": "CS101",
-        "issueDate": "2025-11-21"
-      }
-    ]
-  },
-
-  {
-    "userId": 3446,
-    "username": "Nour",
-    "email": "nour123@gmail.com",
-    "passwordHash": "2c74fd17edwafd80e8447b0d46741ee243b7eb74dd2149a0f0eea5c9f0f8e5a3c",
-    "role": "student",
-    "enrolledCourses": ["CS103", "DR204"],
-    "progress": {
-      "CS103": {
-        "lessonProgress": [
-          {
-            "lessonId": "L1",
-            "quizScore": 78,
-            "completed": true
-          }
-        ],
-        "courseCompleted": false
-      },
-      "DR204": {
-        "lessonProgress": [],
-        "courseCompleted": false
-      }
-    },
-    "certificates": []
-  },
-
-  {
-    "userId": 9657,
-    "username": "Ali",
-    "email": "ali23@gmail.com",
-    "passwordHash": "90174ca2e4fff988f21695c8641c2ce1693c231c074cc64ff953d6fe42ff3868",
-    "role": "instructor",
-    "createdCourses": ["CS101", "DR202"],
-    "insights": {
-      "CS101": {
-        "averageScore": 90,
-        "completionRate": 80
-      },
-      "DR202": {
-        "averageScore": 0,
-        "completionRate": 0
-      }
-    }
-  },
-
-  {
-    "userId": 9667,
-    "username": "Gamal",
-    "email": "gamal23@gmail.com",
-    "passwordHash": "01a0eedaf62153cf1acefc6322866e67b3dc78c10ed7626ec6d8fe508c589b79",
-    "role": "instructor",
-    "createdCourses": ["CS103", "DR204"],
-    "insights": {
-      "CS103": {
-        "averageScore": 82,
-        "completionRate": 65
-      }
-    }
-  },
-
-  {
-    "userId": 3956,
-    "username": "Mariam",
-    "email": "mariam@hotmail.com",
-    "passwordHash": "90174ca2e4fff988f21695c8641c2ce1693c231c074cc64ff953d6fe42ff3868",
-    "role": "instructor",
-    "createdCourses": [],
-    "insights": {}
-  },
-
-  {
-    "userId": 2145,
-    "username": "hoda",
-    "email": "hoda@gmail.com",
-    "passwordHash": "1bc177f34b19b0022484b3aa1016f48d058df23968ac07884b4cd1c3ab003f50",
-    "role": "instructor",
-    "createdCourses": [],
-    "insights": {}
+    ],
+    "userId": 9999,
+    "username": "Admin1",
+    "email": "admin@skillforge.com",
+    "passwordHash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "role": "admin"
   }
 ]

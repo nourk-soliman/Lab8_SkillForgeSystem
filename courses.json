@@ -2,9 +2,8 @@
   {
     "courseId": "CS101",
     "title": "Python",
-    "description": "An introductory course to Python programming.",
     "instructorId": 9657,
-    "approvalStatus": "APPROVED",
+    "description": "An introductory course to Python programming.",
     "lessons": [
       {
         "lessonId": "py1",
@@ -18,15 +17,25 @@
           "questions": [
             {
               "question": "What is the file extension for a Python script?",
-              "options": [".java", ".py", ".exe"],
-              "correctAnswer": ".py"
+              "answerIndex": 0,
+              "options": [
+                ".java",
+                ".py",
+                ".exe"
+              ]
             },
             {
               "question": "Which command runs a Python file?",
-              "options": ["python file.py", "run file", "execute file"],
-              "correctAnswer": "python file.py"
+              "answerIndex": 0,
+              "options": [
+                "python file.py",
+                "run file",
+                "execute file"
+              ]
             }
-          ]
+          ],
+          "passingScore": 70,
+          "timeLimit": 0
         }
       },
       {
@@ -41,26 +50,26 @@
           "questions": [
             {
               "question": "Which of the following is a valid Python variable?",
-              "options": ["2name", "name2", "name-1"],
-              "correctAnswer": "name2"
+              "answerIndex": 0,
+              "options": [
+                "2name",
+                "name2",
+                "name-1"
+              ]
             }
-          ]
+          ],
+          "passingScore": 70,
+          "timeLimit": 0
         }
       }
     ],
-    "Students": [1234, 3456],
-    "performanceStats": {
-      "averageScore": 88,
-      "completionRate": 70
-    }
+    "approvalStatus": "APPROVED"
   },
-
   {
     "courseId": "DR202",
     "title": "Learn how to drive",
-    "description": "A comprehensive course on driving skills and road safety.",
     "instructorId": 9657,
-    "approvalStatus": "PENDING",
+    "description": "A comprehensive course on driving skills and road safety.",
     "lessons": [
       {
         "lessonId": "ds1",
@@ -74,10 +83,16 @@
           "questions": [
             {
               "question": "What does a red octagon sign mean?",
-              "options": ["Stop", "Yield", "Turn Right"],
-              "correctAnswer": "Stop"
+              "answerIndex": 0,
+              "options": [
+                "Stop",
+                "Yield",
+                "Turn Right"
+              ]
             }
-          ]
+          ],
+          "passingScore": 70,
+          "timeLimit": 0
         }
       },
       {
@@ -92,17 +107,75 @@
           "questions": [
             {
               "question": "Which foot is used for the brake pedal?",
-              "options": ["Left", "Right"],
-              "correctAnswer": "Right"
+              "answerIndex": 0,
+              "options": [
+                "Left",
+                "Right"
+              ]
             }
-          ]
+          ],
+          "passingScore": 70,
+          "timeLimit": 0
         }
       }
     ],
-    "Students": [3456],
-    "performanceStats": {
-      "averageScore": 75,
-      "completionRate": 40
-    }
+    "approvalStatus": "PENDING"
+  },
+  {
+    "courseId": "cce",
+    "title": "ds",
+    "instructorId": 3640,
+    "description": "sd",
+    "lessons": [
+      {
+        "lessonId": "dsf",
+        "title": "sdf",
+        "content": "dsf",
+        "optionalResources": [],
+        "quiz": {
+          "quizId": "cce_dsf_quiz",
+          "questions": [
+            {
+              "questionId": "cce_dsf_quiz_q1",
+              "question": "name",
+              "answerIndex": 2,
+              "options": [
+                "assa",
+                "asas",
+                "asas",
+                "asas"
+              ]
+            }
+          ],
+          "passingScore": 70,
+          "timeLimit": 0
+        }
+      },
+      {
+        "lessonId": "dfs",
+        "title": "dsf",
+        "content": "dsf",
+        "optionalResources": [],
+        "quiz": {
+          "quizId": "cce_dfs_quiz",
+          "questions": [
+            {
+              "questionId": "cce_dfs_quiz_q1",
+              "question": "esmak eh",
+              "answerIndex": 1,
+              "options": [
+                "moaz",
+                "refaat",
+                "ali"
+              ]
+            }
+          ],
+          "passingScore": 40,
+          "timeLimit": 0
+        }
+      }
+    ],
+    "students": [],
+    "approvalStatus": "PENDING"
   }
 ]

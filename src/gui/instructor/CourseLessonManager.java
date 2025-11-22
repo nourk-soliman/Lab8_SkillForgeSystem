@@ -14,7 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 /**
- *
+ * Course and Lesson Management Interface with Quiz Management
+ * 
  * @author moaz
  */
 public class CourseLessonManager extends javax.swing.JFrame {
@@ -30,11 +31,10 @@ public class CourseLessonManager extends javax.swing.JFrame {
         this.instructorRole = new InstructorRole();
         initComponents();
         loadInstructorCourses();
+        addQuizManagementTab();
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -145,13 +145,14 @@ public class CourseLessonManager extends javax.swing.JFrame {
         lessonsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {},
                 new String[] {
-                        "Lesson ID", "Title", "Content", "Resources"
+                        "Lesson ID", "Title", "Content", "Resources", "Has Quiz"
                 }) {
             Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class,
+                    java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean[] {
-                    false, false, false, false
+                    false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -272,10 +273,165 @@ public class CourseLessonManager extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }
+
+    private void addQuizManagementTab() {
+        javax.swing.JPanel quizPanel = new javax.swing.JPanel();
+        quizPanel.setBackground(new java.awt.Color(204, 255, 255));
+
+        javax.swing.JLabel courseLabel = new javax.swing.JLabel("Select Course:");
+        javax.swing.JComboBox<String> quizCourseComboBox = new javax.swing.JComboBox<>();
+        quizCourseComboBox.addItem("Select Course");
+
+        javax.swing.JLabel lessonLabel = new javax.swing.JLabel("Select Lesson:");
+        javax.swing.JComboBox<String> quizLessonComboBox = new javax.swing.JComboBox<>();
+        quizLessonComboBox.addItem("Select Lesson");
+
+        javax.swing.JButton addQuizBtn = new javax.swing.JButton("Add/Edit Quiz");
+        javax.swing.JButton viewQuizBtn = new javax.swing.JButton("View Quiz");
+        javax.swing.JButton deleteQuizBtn = new javax.swing.JButton("Delete Quiz");
+
+        // Populate course combo box
+        for (Course course : instructorCourses) {
+            quizCourseComboBox.addItem(course.getCourseId() + " - " + course.getTitle());
+        }
+
+        // Course selection listener
+        quizCourseComboBox.addActionListener(e -> {
+            String selected = (String) quizCourseComboBox.getSelectedItem();
+            quizLessonComboBox.removeAllItems();
+            quizLessonComboBox.addItem("Select Lesson");
+
+            if (selected != null && !selected.equals("Select Course")) {
+                String courseId = selected.split(" - ")[0];
+                List<Lesson> lessons = instructorRole.getCourseLessons(courseId, instructor);
+                for (Lesson lesson : lessons) {
+                    String hasQuiz = lesson.hasQuiz() ? " [Has Quiz]" : "";
+                    quizLessonComboBox.addItem(lesson.getLessonId() + " - " + lesson.getTitle() + hasQuiz);
+                }
+            }
+        });
+
+        // Add Quiz button
+        addQuizBtn.addActionListener(e -> {
+            String courseItem = (String) quizCourseComboBox.getSelectedItem();
+            String lessonItem = (String) quizLessonComboBox.getSelectedItem();
+
+            if (courseItem == null || courseItem.equals("Select Course") ||
+                    lessonItem == null || lessonItem.equals("Select Lesson")) {
+                JOptionPane.showMessageDialog(this, "Please select a course and lesson");
+                return;
+            }
+
+            String courseId = courseItem.split(" - ")[0];
+            String lessonId = lessonItem.split(" - ")[0];
+
+            instructorRole.addQuizToLesson(courseId, lessonId, instructor);
+
+            // Refresh lesson combo box
+            quizCourseComboBox.setSelectedItem(courseItem);
+        });
+
+        // View Quiz button
+        viewQuizBtn.addActionListener(e -> {
+            String courseItem = (String) quizCourseComboBox.getSelectedItem();
+            String lessonItem = (String) quizLessonComboBox.getSelectedItem();
+
+            if (courseItem == null || courseItem.equals("Select Course") ||
+                    lessonItem == null || lessonItem.equals("Select Lesson")) {
+                JOptionPane.showMessageDialog(this, "Please select a course and lesson");
+                return;
+            }
+
+            String courseId = courseItem.split(" - ")[0];
+            String lessonId = lessonItem.split(" - ")[0];
+
+            instructorRole.viewQuizDetails(courseId, lessonId, instructor);
+        });
+
+        // Delete Quiz button
+        deleteQuizBtn.addActionListener(e -> {
+            String courseItem = (String) quizCourseComboBox.getSelectedItem();
+            String lessonItem = (String) quizLessonComboBox.getSelectedItem();
+
+            if (courseItem == null || courseItem.equals("Select Course") ||
+                    lessonItem == null || lessonItem.equals("Select Lesson")) {
+                JOptionPane.showMessageDialog(this, "Please select a course and lesson");
+                return;
+            }
+
+            String courseId = courseItem.split(" - ")[0];
+            String lessonId = lessonItem.split(" - ")[0];
+
+            instructorRole.deleteQuizFromLesson(courseId, lessonId, instructor);
+
+            // Refresh lesson combo box
+            quizCourseComboBox.setSelectedItem(courseItem);
+        });
+
+        // Layout for quiz panel
+        javax.swing.GroupLayout quizPanelLayout = new javax.swing.GroupLayout(quizPanel);
+        quizPanel.setLayout(quizPanelLayout);
+        quizPanelLayout.setHorizontalGroup(
+                quizPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(quizPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(quizPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(quizPanelLayout.createSequentialGroup()
+                                                .addComponent(courseLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(quizCourseComboBox,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 300,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(quizPanelLayout.createSequentialGroup()
+                                                .addComponent(lessonLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(quizLessonComboBox,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 300,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(quizPanelLayout.createSequentialGroup()
+                                                .addComponent(addQuizBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(viewQuizBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(deleteQuizBtn, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        quizPanelLayout.setVerticalGroup(
+                quizPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(quizPanelLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(quizPanelLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(courseLabel)
+                                        .addComponent(quizCourseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(quizPanelLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lessonLabel)
+                                        .addComponent(quizLessonComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(
+                                        quizPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(addQuizBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(viewQuizBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(deleteQuizBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(150, Short.MAX_VALUE)));
+
+        jTabbedPane1.addTab("Manage Quizzes", quizPanel);
+    }
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        this.dispose(); // Use dispose instead of setVisible(false)
+        this.dispose();
         new InstructorBoard(instructor).setVisible(true);
     }
 
@@ -377,7 +533,6 @@ public class CourseLessonManager extends javax.swing.JFrame {
     }
 
     private void refreshCourseComboBox() {
-        // Remove action listener temporarily to prevent firing during update
         java.awt.event.ActionListener[] listeners = courseComboBox.getActionListeners();
         for (java.awt.event.ActionListener listener : listeners) {
             courseComboBox.removeActionListener(listener);
@@ -389,7 +544,6 @@ public class CourseLessonManager extends javax.swing.JFrame {
             courseComboBox.addItem(course.getCourseId());
         }
 
-        // Re-add action listeners
         for (java.awt.event.ActionListener listener : listeners) {
             courseComboBox.addActionListener(listener);
         }
@@ -398,9 +552,7 @@ public class CourseLessonManager extends javax.swing.JFrame {
     private void loadLessonsForSelectedCourse() {
         String selectedCourseId = getSelectedCourseId();
 
-        // Simply return without showing error if no course selected yet
         if (selectedCourseId == null) {
-            // Clear the lessons table
             DefaultTableModel model = (DefaultTableModel) lessonsTable.getModel();
             model.setRowCount(0);
             return;
@@ -416,11 +568,14 @@ public class CourseLessonManager extends javax.swing.JFrame {
                 contentPreview = contentPreview.substring(0, 50) + "...";
             }
 
+            String hasQuiz = lesson.hasQuiz() ? "Yes (" + lesson.getQuiz().getTotalQuestions() + ")" : "No";
+
             model.addRow(new Object[] {
                     lesson.getLessonId(),
                     lesson.getTitle(),
                     contentPreview,
-                    lesson.getOptionalResources().size()
+                    lesson.getOptionalResources().size(),
+                    hasQuiz
             });
         }
     }
@@ -428,7 +583,6 @@ public class CourseLessonManager extends javax.swing.JFrame {
     private String getSelectedCourseId() {
         String selectedCourseId = (String) courseComboBox.getSelectedItem();
         if (selectedCourseId == null || selectedCourseId.equals("Select Course")) {
-            // Don't show error, just return null
             return null;
         }
         return selectedCourseId;
@@ -438,7 +592,7 @@ public class CourseLessonManager extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration
     private javax.swing.JButton addLessonBtn;
     private javax.swing.JButton backBtn;
     private javax.swing.JButton createCourseBtn;
@@ -459,5 +613,4 @@ public class CourseLessonManager extends javax.swing.JFrame {
     private javax.swing.JButton refreshCoursesBtn;
     private javax.swing.JButton refreshLessonsBtn;
     private javax.swing.JLabel titleLabel;
-    // End of variables declaration//GEN-END:variables
 }
