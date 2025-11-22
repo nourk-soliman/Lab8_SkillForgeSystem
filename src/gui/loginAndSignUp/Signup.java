@@ -293,22 +293,36 @@ public class Signup extends javax.swing.JFrame {
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bloginActionPerformed
         // TODO add your handling code here:
-        if (jusername.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Please Fill out the username");
-        } else if (jpassword.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "Please enter the password feild");
-        } else if (jemail.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Please fill out the email");
-        } else {
-            String role = lchoices.getSelectedItem().toString();
-            String name = jusername.getText();
-            String password = new String(jpassword.getPassword());
-            String email = jemail.getText();
+         if (jusername.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "Please Fill out the username");
+    } else if (jpassword.getPassword().length == 0) {
+        JOptionPane.showMessageDialog(null, "Please enter the password field");
+    } else if (jemail.getText().equals("")) {
+        JOptionPane.showMessageDialog(null, "Please fill out the email");
+    } else {
+        String role = lchoices.getSelectedItem().toString();
+        String name = jusername.getText();
+        String password = new String(jpassword.getPassword());
+        String email = jemail.getText();
+        
+        // Add basic validation
+        if (password.length() < 6) {
+            JOptionPane.showMessageDialog(null, "Password must be at least 6 characters");
+            return;
+        }
+        
+        if (!email.contains("@") || !email.contains(".")) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid email address");
+            return;
+        }
+        
             if (role.contains("Student")) {
-                Student str = userService.SignUpStudent(name, email, password);
+                
+                Student str = userService.signUpStudent(name, email, password);
                 if (str == null) {
-                    JOptionPane.showMessageDialog(null, "Format of one of the feilds is invalid");
-                } else {
+                    JOptionPane.showMessageDialog(null, "Account Already Exists! please Login");
+                }
+                else {
                     JOptionPane.showMessageDialog(null, "Signup is successfull! Please login.");
                     StudentBoard studentBoard = new StudentBoard(str);
                     studentBoard.setVisible(true);
@@ -317,7 +331,7 @@ public class Signup extends javax.swing.JFrame {
             } else if (role.contains("Instructor")) {
                 Instructor inst = userService.signupInstructor(name, email, password);
                 if (inst == null) {
-                    JOptionPane.showMessageDialog(null, "Format of one of the feilds is invalid");
+                    JOptionPane.showMessageDialog(null, "Account already Exists! Please login");
                 } else {
                     JOptionPane.showMessageDialog(null, "Sign up Successfull!");
                     InstructorBoard instructorDashboard = new InstructorBoard(inst);

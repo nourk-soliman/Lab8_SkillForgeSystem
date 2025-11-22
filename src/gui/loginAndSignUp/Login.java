@@ -4,6 +4,7 @@
  */
 package gui.loginAndSignUp;
 
+import gui.dashboards.AdminBoard;
 import gui.dashboards.InstructorBoard;
 import gui.dashboards.StudentBoard;
 import model.user.Instructor;
@@ -11,6 +12,7 @@ import logic.authentication.PasswordService;
 import model.user.Student;
 import logic.authentication.UserService;
 import javax.swing.JOptionPane;
+import model.user.Admin;
 
 /**
  *
@@ -27,6 +29,7 @@ public class Login extends javax.swing.JFrame {
     public Login(UserService userService) {
         this.userService = userService;
         initComponents();
+        lchoices.addItem("Admin");
     }
 
     /**
@@ -290,6 +293,17 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Login Successful");
                 InstructorBoard instructorBoard = new InstructorBoard(inst);
                 instructorBoard.setVisible(true);
+                this.dispose();
+            }
+        }
+        else if(role.contains("Admin")){
+            Admin adm=userService.validateAdmin(name, password);
+            if(adm == null){
+                JOptionPane.showMessageDialog(null,"Invalid Username or Password");
+            }else{
+                JOptionPane.showMessageDialog(null, "Login Successful");
+                AdminBoard adminBoard = new AdminBoard(adm);
+                adminBoard.setVisible(true);
                 this.dispose();
             }
         }
