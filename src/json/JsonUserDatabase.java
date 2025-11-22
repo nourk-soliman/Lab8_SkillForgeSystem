@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import model.user.Admin;
 
 /**
  *
@@ -19,6 +20,7 @@ public class JsonUserDatabase extends JsonHandler {
 
     private List<Student> students = new ArrayList<>();
     private List<Instructor> instructors = new ArrayList<>();
+    private List<Admin> admins = new ArrayList<>();
 
     public JsonUserDatabase(String filename) {
         super(filename);
@@ -50,6 +52,9 @@ public class JsonUserDatabase extends JsonHandler {
             } else if (role.equalsIgnoreCase("instructor")) {
                 Instructor instructor = gson.fromJson(element, Instructor.class);
                 instructors.add(instructor);
+            }else if(role.equalsIgnoreCase("admin")){
+                Admin admin=gson.fromJson(element, Admin.class);
+                admins.add(admin);
             }
         }
     }
@@ -83,6 +88,10 @@ public class JsonUserDatabase extends JsonHandler {
     public List<Instructor> getInstructors() {
         return new ArrayList<>(instructors);
     }
+    
+    public List<Admin> getAdmins(){
+        return new ArrayList<>(admins);
+    }
 
     public void setStudents(List<Student> students) {
         this.students = students;
@@ -90,5 +99,9 @@ public class JsonUserDatabase extends JsonHandler {
 
     public void setInstructors(List<Instructor> instructors) {
         this.instructors = instructors;
+    }
+    
+    public void setAdmins(List<Admin> admins){
+        this.admins= admins;
     }
 }
