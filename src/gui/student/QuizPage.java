@@ -4,34 +4,154 @@
  */
 package gui.student;
 
-import Json.CoursesDatabase;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import json.JsonUserDatabase;
+import model.course.CourseProgress;
 import model.course.Lesson;
+import model.course.LessonProgress;
 import model.quiz.Quiz;
+import model.quiz.QuizQuestion;
+import model.user.Student;
 
 /**
  *
  * @author Nour
  */
 public class QuizPage extends javax.swing.JFrame {
+    private Student student;
     private Lesson lesson;
-    
+    private int currentQuestionIndex = 0;
+    private float score=0;
+         private ButtonGroup group;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(QuizPage.class.getName());
 
     /**
      * Creates new form QuizPage
      */
-    public QuizPage(Lesson lesson) {
+    public QuizPage(Student student,Lesson lesson) {
         this.lesson=lesson;
+        this.student=student;
         initComponents();
+        optionsPanel.setLayout(new javax.swing.BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+
+     nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleNextButton();
+            }
+        });  
+     uploadQuiz();
     }
-public void uploadQuiz()
-{Quiz quiz=lesson.getQuiz();
-ArrayList<QuizQuestions> questions=quiz.getQuestions();
+public void uploadQuiz() {
+    Quiz quiz = lesson.getQuiz();
+    ArrayList<QuizQuestion> questions = quiz.getQuestions();
 
+    // If no questions exist
+    if (questions.isEmpty()) {
+        questionLabel.setText("No questions found.");
+        return;
+    }
 
+    // Get the current question
+    QuizQuestion q = questions.get(currentQuestionIndex);
 
+    // Update question text
+    questionLabel.setText(q.getQuestion());
 
+    // Clear old options
+    optionsPanel.removeAll();
+    
+    // Make a fresh button group
+    group = new ButtonGroup();
+
+    // Add options
+    for (int i = 0; i < q.getOptions().size(); i++) {
+        String option = q.getOptions().get(i);
+        JRadioButton optionBtn = new JRadioButton(option);
+        optionBtn.setActionCommand(String.valueOf(i)); // index of option
+        group.add(optionBtn);
+        optionsPanel.add(optionBtn);
+    }
+
+    // Update button text (Next or Submit)
+    if (currentQuestionIndex == questions.size() - 1) {
+        nextButton.setText("Submit");
+    } else {
+        nextButton.setText("Next");
+    }
+
+    optionsPanel.revalidate();
+    optionsPanel.repaint();
+}
+private void handleNextButton() {
+    Quiz quiz = lesson.getQuiz();
+    ArrayList<QuizQuestion> questions = quiz.getQuestions();
+    boolean flag=false;
+    // Get selected answer
+    String selected;
+    if(group.getSelection() != null)
+            selected=group.getSelection().getActionCommand();
+                    else selected=null;
+
+    if (selected == null) {
+        JOptionPane.showMessageDialog(this, "Please select an answer.");
+        return;
+    }
+
+    int selectedIndex = Integer.parseInt(selected);
+    QuizQuestion currentQuestion = questions.get(currentQuestionIndex);
+    if(selectedIndex==currentQuestion.getAnswerIndex())
+        score++;
+    // Store student answer (you can save it however you want)
+    System.out.println("Student selected option " + selectedIndex);
+
+    // Load next question or finish
+    if (currentQuestionIndex < questions.size() - 1) {
+        currentQuestionIndex++;
+        uploadQuiz();
+    } else {
+        float finalScore=(float)(score/questions.size())*100;
+        JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: "+ finalScore);
+        
+        List<CourseProgress> courseProgress=student.getProgress();
+    
+        for(CourseProgress c:courseProgress)
+        {List<LessonProgress>lessonProgress=c.getLessonProgress();
+            for(LessonProgress l:lessonProgress )
+                if (l.getLessonId().equals(lesson.getLessonId()))
+              {flag=true;
+                  l.setQuizScore(finalScore);
+               if(finalScore>=50)
+               {l.setCompleted(true);}
+                else{l.setCompleted(false);}
+                    break;}
+        
+        if(flag) break;
+        }
+       JsonUserDatabase reader = new JsonUserDatabase("users.json");
+       List<Student> students = reader.getStudents();
+      for (int i = 0; i < students.size(); i++) {
+    if (students.get(i).getUserId() == student.getUserId()) {  
+        students.set(i, student);   // update
+        break;
+    }
+}
+
+reader.setStudents(students);
+reader.saveToFile("users.json");
+
+        System.out.println("data saved successfully");
+        this.dispose();
+        CompleteLesson completeLesson=new CompleteLesson(student);
+        completeLesson.setVisible(true);
+    }
 }
 
     /**
@@ -43,17 +163,52 @@ ArrayList<QuizQuestions> questions=quiz.getQuestions();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        questionLabel = new javax.swing.JLabel();
+        optionsPanel = new javax.swing.JPanel();
+        nextButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        questionLabel.setText("jLabel1");
+
+        javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
+        optionsPanel.setLayout(optionsPanelLayout);
+        optionsPanelLayout.setHorizontalGroup(
+            optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        optionsPanelLayout.setVerticalGroup(
+            optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 189, Short.MAX_VALUE)
+        );
+
+        nextButton.setText("jButton1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(questionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(optionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 319, Short.MAX_VALUE)
+                        .addComponent(nextButton)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(questionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nextButton)
+                .addContainerGap())
         );
 
         pack();
@@ -81,11 +236,11 @@ ArrayList<QuizQuestions> questions=quiz.getQuestions();
         //</editor-fold>
 
         /* Create and display the form */
-        /*java.awt.EventQueue.invokeLater(() -> new QuizPage(Lesson lesson).setVisible(true));*/
-      
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton nextButton;
+    private javax.swing.JPanel optionsPanel;
+    private javax.swing.JLabel questionLabel;
     // End of variables declaration//GEN-END:variables
 }
