@@ -76,21 +76,26 @@ public class JsonUserDatabase extends JsonHandler {
             element.getAsJsonObject().addProperty("role", "instructor");
             jsonArray.add(element);
         }
+          for (Admin admin : admins) {  // ADD THIS LOOP!
+        JsonElement element = gson.toJsonTree(admin);
+        element.getAsJsonObject().addProperty("role", "admin");
+        jsonArray.add(element);
+    }
 
         return jsonArray;
     }
 
     // Getters and setters remain the same
     public List<Student> getStudents() {
-        return new ArrayList<>(students);
+        return students;
     }
 
     public List<Instructor> getInstructors() {
-        return new ArrayList<>(instructors);
+        return instructors;
     }
     
     public List<Admin> getAdmins(){
-        return new ArrayList<>(admins);
+        return admins;
     }
 
     public void setStudents(List<Student> students) {
