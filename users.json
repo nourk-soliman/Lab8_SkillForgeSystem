@@ -27,10 +27,18 @@
         "completed": false
       }
     ],
+    "certificates": [
+      {
+        "issueDate": "2025-11-22",
+        "studentId": 1234,
+        "courseId": "CS101",
+        "certificateId": "CERT_CS101_1234_001"
+      }
+    ],
     "userId": 1234,
     "username": "Salma",
     "email": "mss12@gmail.com",
-    "passwordHash": "d444b274fac69a6a33f580168d2bd0b27f66da2ca95c887eeec971a1932e226b",
+    "passwordHash": "f7c3bc1d808e04732adf679965ccc34ca7ae3441f0f1c1468e8d7f0a0f8f0f0c",
     "role": "student"
   },
   {
@@ -80,6 +88,7 @@
         "completed": false
       }
     ],
+    "certificates": [],
     "userId": 3456,
     "username": "Samer",
     "email": "samer123@gmail.com",
@@ -115,6 +124,14 @@
         "completed": false
       }
     ],
+    "certificates": [
+      {
+        "issueDate": "2025-11-21",
+        "studentId": 3446,
+        "courseId": "DR202",
+        "certificateId": "CERT_DR202_3446_001"
+      }
+    ],
     "userId": 3446,
     "username": "Nour",
     "email": "nour123@gmail.com",
@@ -126,6 +143,7 @@
       "CS101"
     ],
     "progress": [],
+    "certificates": [],
     "userId": 3476,
     "username": "student",
     "email": "dsa@sad.das",
