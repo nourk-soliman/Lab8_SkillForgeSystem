@@ -17,6 +17,7 @@ import model.course.CourseProgress;
 import model.course.Lesson;
 import model.course.LessonProgress;
 import model.quiz.Quiz;
+import model.quiz.QuizAttempt;
 import model.quiz.QuizQuestion;
 import model.user.Student;
 
@@ -39,6 +40,7 @@ public class QuizPage extends javax.swing.JFrame {
         this.lesson=lesson;
         this.student=student;
         initComponents();
+        setLocationRelativeTo(null);
         optionsPanel.setLayout(new javax.swing.BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
      nextButton.addActionListener(new ActionListener() {
@@ -109,16 +111,35 @@ private void handleNextButton() {
     QuizQuestion currentQuestion = questions.get(currentQuestionIndex);
     if(selectedIndex==currentQuestion.getAnswerIndex())
         score++;
-    // Store student answer (you can save it however you want)
     System.out.println("Student selected option " + selectedIndex);
 
-    // Load next question or finish
     if (currentQuestionIndex < questions.size() - 1) {
         currentQuestionIndex++;
         uploadQuiz();
     } else {
         float finalScore=(float)(score/questions.size())*100;
-        JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: "+ finalScore);
+        if(finalScore<50)
+        {JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: "+ finalScore+"\nRetry Policy: "+quiz.getRetryPolicy());}
+        else JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: "+ finalScore);
+        this.dispose();
+        StringBuilder review = new StringBuilder();
+review.append("Correct Answers:\n\n");
+
+for (int i = 0; i < questions.size(); i++) {
+    QuizQuestion q = questions.get(i);
+    String correct = q.getOptions().get(q.getAnswerIndex());
+
+    review.append((i+1) + ". ")
+          .append(q.getQuestion()).append("\n")
+          .append(" → Correct answer: ").append(correct)
+          .append("\n\n");
+}
+
+JOptionPane.showMessageDialog(this,
+        review.toString(),
+        "Answer Review",
+        JOptionPane.INFORMATION_MESSAGE);
+
         
         List<CourseProgress> courseProgress=student.getProgress();
     
@@ -128,6 +149,10 @@ private void handleNextButton() {
                 if (l.getLessonId().equals(lesson.getLessonId()))
               {flag=true;
                   l.setQuizScore(finalScore);
+                  ArrayList<QuizAttempt> attempts=l.getAttempts();
+                  QuizAttempt attempt=new QuizAttempt(finalScore);
+                  attempts.add(attempt);
+                  l.setAttempts(attempts);
                if(finalScore>=50)
                {l.setCompleted(true);}
                 else{l.setCompleted(false);}
@@ -146,6 +171,7 @@ private void handleNextButton() {
 
 reader.setStudents(students);
 reader.saveToFile("users.json");
+
 
         System.out.println("data saved successfully");
         this.dispose();
