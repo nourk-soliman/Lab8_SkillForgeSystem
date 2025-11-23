@@ -8,26 +8,19 @@ import model.user.Student;
 import model.user.Instructor;
 import model.course.Course;
 import model.course.Lesson;
-import model.quiz.Quiz;
-import model.quiz.QuizQuestion;
-
+import json.JsonCoursesDatabase;
 import json.JsonUserDatabase;
-
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import java.util.ArrayList;
 import java.util.List;
-import json.JsonCoursesDatabase;
-import model.course.CourseStatus;
+import model.quiz.Quiz;
+import model.quiz.QuizQuestion;
 
 /**
- * Instructor Role with Course, Lesson, and Quiz Management
- * 
+ *
  * @author moaz
  */
 public class InstructorRole {
@@ -107,7 +100,6 @@ public class InstructorRole {
         // Update instructor's created courses
         instructor.getCreatedCourses().add(courseId);
         updateInstructorData(instructor);
-        newCourse.setApprovalStatus(CourseStatus.PENDING);
 
         // Add course to courses list and save
         addCourseToFile(newCourse);
@@ -159,7 +151,19 @@ public class InstructorRole {
         }
         return new ArrayList<>();
     }
+public void addQuizToLesson(String lessonId)
+{
 
+
+
+}
+        
+        
+        
+        
+        
+        
+        
     public void addLessonToCourse(String courseId, Instructor instructor) {
         Course course = findCourseById(courseId);
         if (!validateCourseAccess(course, instructor))
@@ -184,8 +188,13 @@ public class InstructorRole {
 
         // Add optional resources
         List<String> resources = getOptionalResources();
-
-        Lesson newLesson = new Lesson(lessonId, title, content, resources);
+        ArrayList<QuizQuestion> questions=new ArrayList<>();
+        ArrayList<String> options=new ArrayList<>();
+        options.add("one.");
+        options.add("two.");
+        questions.add(new QuizQuestion("How many fundamentals are there?",1,options));
+         Quiz quiz=new Quiz(questions,"unlimited.");
+        Lesson newLesson = new Lesson(lessonId, title, content, resources,quiz);
         course.getLessons().add(newLesson);
 
         updateCourseInFile(course);
@@ -213,9 +222,8 @@ public class InstructorRole {
 
         // Edit optional resources
         int editResources = showConfirmDialog(
-                """
-                        Do you want to edit the optional resources?
-                        Current resources: """ + lesson.getOptionalResources().size());
+                "Do you want to edit the optional resources?\n" +
+                        "Current resources: " + lesson.getOptionalResources().size());
 
         List<String> resources = lesson.getOptionalResources();
         if (editResources == JOptionPane.YES_OPTION) {
@@ -282,338 +290,6 @@ public class InstructorRole {
             updateCourseInFile(course);
             showSuccess("Lesson deleted successfully!");
         }
-    }
-
-    // Quiz Management Methods
-    public void addQuizToLesson(String courseId, String lessonId, Instructor instructor) {
-        Course course = findCourseById(courseId);
-        if (!validateCourseAccess(course, instructor))
-            return;
-
-        Lesson lesson = findLessonInCourse(course, lessonId);
-        if (lesson == null) {
-            showError("Lesson not found!");
-            return;
-        }
-
-        if (lesson.hasQuiz()) {
-            int confirm = showConfirmDialog(
-                    "This lesson already has a quiz. Do you want to replace it?");
-            if (confirm != JOptionPane.YES_OPTION) {
-                return;
-            }
-        }
-
-        try {
-            // Create quiz
-            String quizId = courseId + "_" + lessonId + "_quiz";
-
-            // Get passing score
-            String passingScoreStr = JOptionPane.showInputDialog(
-                    null,
-                    "Enter passing score (percentage, 0-100):",
-                    "70");
-
-            if (passingScoreStr == null)
-                return;
-
-            int passingScore = 70;
-            try {
-                passingScore = Integer.parseInt(passingScoreStr.trim());
-                if (passingScore < 0 || passingScore > 100) {
-                    showError("Passing score must be between 0 and 100");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                showError("Invalid passing score. Please enter a number between 0 and 100.");
-                return;
-            }
-
-            // Get time limit
-            String timeLimitStr = JOptionPane.showInputDialog(
-                    null,
-                    "Enter time limit in minutes (0 for no limit):",
-                    "0");
-
-            if (timeLimitStr == null)
-                return;
-
-            int timeLimit = 0;
-            try {
-                timeLimit = Integer.parseInt(timeLimitStr.trim());
-                if (timeLimit < 0) {
-                    showError("Time limit cannot be negative");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                showError("Invalid time limit. Please enter a valid number.");
-                return;
-            }
-
-            ArrayList<QuizQuestion> questions = new ArrayList<>();
-
-            // Add questions loop
-            boolean addingQuestions = true;
-            int questionNumber = 1;
-
-            while (addingQuestions && questionNumber <= 20) { // Maximum 20 questions
-                // Get question text
-                JTextArea questionArea = new JTextArea(3, 40);
-                questionArea.setLineWrap(true);
-                questionArea.setWrapStyleWord(true);
-                JScrollPane questionScroll = new JScrollPane(questionArea);
-
-                int result = JOptionPane.showConfirmDialog(
-                        null,
-                        new Object[] {
-                                "Question " + questionNumber + " (minimum 3 characters):",
-                                questionScroll
-                        },
-                        "Add Question",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.PLAIN_MESSAGE);
-
-                if (result != JOptionPane.OK_OPTION) {
-                    if (questions.isEmpty()) {
-                        showError("Quiz must have at least one question!");
-                        return;
-                    }
-                    break;
-                }
-
-                String question = questionArea.getText();
-                if (question == null || question.trim().isEmpty()) {
-                    if (questions.isEmpty()) {
-                        showError("Quiz must have at least one question!");
-                        return;
-                    }
-                    break;
-                }
-
-                question = question.trim();
-                if (question.length() < 3) {
-                    showError("Question must be at least 3 characters long!");
-                    continue;
-                }
-
-                // Get options
-                ArrayList<String> options = new ArrayList<>();
-                boolean validOptions = false;
-
-                while (!validOptions) {
-                    options.clear();
-                    JPanel optionsPanel = new JPanel(new java.awt.GridLayout(4, 2, 5, 5));
-                    JTextField[] optionFields = new JTextField[4];
-
-                    for (int i = 0; i < 4; i++) {
-                        optionsPanel.add(new JLabel("Option " + (i + 1) + ":"));
-                        optionFields[i] = new JTextField(20);
-                        optionsPanel.add(optionFields[i]);
-                    }
-
-                    result = JOptionPane.showConfirmDialog(
-                            null,
-                            new Object[] {
-                                    "Enter at least 2 options:",
-                                    optionsPanel
-                            },
-                            "Add Options",
-                            JOptionPane.OK_CANCEL_OPTION,
-                            JOptionPane.PLAIN_MESSAGE);
-
-                    if (result != JOptionPane.OK_OPTION) {
-                        break;
-                    }
-
-                    for (JTextField field : optionFields) {
-                        String option = field.getText();
-                        if (option != null && !option.trim().isEmpty()) {
-                            options.add(option.trim());
-                        }
-                    }
-
-                    if (options.size() < 2) {
-                        showError("At least 2 options are required!");
-                    } else {
-                        validOptions = true;
-                    }
-                }
-
-                if (!validOptions || options.size() < 2) {
-                    continue;
-                }
-
-                // Get correct answer index
-                String[] optionArray = new String[options.size()];
-                for (int i = 0; i < options.size(); i++) {
-                    optionArray[i] = (i + 1) + ". " + options.get(i);
-                }
-
-                String selected = (String) JOptionPane.showInputDialog(
-                        null,
-                        "Select the correct answer:",
-                        "Correct Answer",
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        optionArray,
-                        optionArray[0]);
-
-                if (selected == null) {
-                    continue;
-                }
-
-                int correctAnswer = -1;
-                for (int i = 0; i < optionArray.length; i++) {
-                    if (optionArray[i].equals(selected)) {
-                        correctAnswer = i;
-                        break;
-                    }
-                }
-
-                if (correctAnswer == -1) {
-                    showError("Please select a valid answer!");
-                    continue;
-                }
-
-                // Create question
-                try {
-                    String questionId = quizId + "_q" + questionNumber;
-                    QuizQuestion quizQuestion = new QuizQuestion(
-                            questionId, question, correctAnswer, options);
-                    questions.add(quizQuestion);
-
-                    int addMore = showConfirmDialog(
-                            "Question " + questionNumber + " added successfully!\nAdd another question?");
-                    if (addMore != JOptionPane.YES_OPTION) {
-                        addingQuestions = false;
-                    }
-                    questionNumber++;
-                } catch (IllegalArgumentException e) {
-                    showError("Error creating question: " + e.getMessage());
-                    continue;
-                }
-            }
-
-            if (questions.isEmpty()) {
-                showError("Quiz must have at least one question!");
-                return;
-            }
-
-            // Create and set quiz
-            Quiz quiz = new Quiz(quizId, questions, passingScore, timeLimit);
-            lesson.setQuiz(quiz);
-
-            updateCourseInFile(course);
-            showSuccess("Quiz created successfully!\n" +
-                    "Total questions: " + questions.size() + "\n" +
-                    "Passing score: " + passingScore + "%");
-
-        } catch (Exception e) {
-            showError("Error creating quiz: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void editQuizInLesson(String courseId, String lessonId, Instructor instructor) {
-        Course course = findCourseById(courseId);
-        if (!validateCourseAccess(course, instructor))
-            return;
-
-        Lesson lesson = findLessonInCourse(course, lessonId);
-        if (lesson == null) {
-            showError("Lesson not found!");
-            return;
-        }
-
-        if (!lesson.hasQuiz()) {
-            showError("This lesson doesn't have a quiz!");
-            return;
-        }
-
-        int confirm = showConfirmDialog(
-                "Do you want to edit the quiz? This will replace the existing quiz.");
-        if (confirm == JOptionPane.YES_OPTION) {
-            addQuizToLesson(courseId, lessonId, instructor);
-        }
-    }
-
-    public void deleteQuizFromLesson(String courseId, String lessonId, Instructor instructor) {
-        Course course = findCourseById(courseId);
-        if (!validateCourseAccess(course, instructor))
-            return;
-
-        Lesson lesson = findLessonInCourse(course, lessonId);
-        if (lesson == null) {
-            showError("Lesson not found!");
-            return;
-        }
-
-        if (!lesson.hasQuiz()) {
-            showError("This lesson doesn't have a quiz!");
-            return;
-        }
-
-        int confirm = showConfirmDialog(
-                "Are you sure you want to delete the quiz from this lesson?");
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            lesson.setQuiz(null);
-            updateCourseInFile(course);
-            showSuccess("Quiz deleted successfully!");
-        }
-    }
-
-    public void viewQuizDetails(String courseId, String lessonId, Instructor instructor) {
-        Course course = findCourseById(courseId);
-        if (!validateCourseAccess(course, instructor))
-            return;
-
-        Lesson lesson = findLessonInCourse(course, lessonId);
-        if (lesson == null) {
-            showError("Lesson not found!");
-            return;
-        }
-
-        if (!lesson.hasQuiz()) {
-            showError("This lesson doesn't have a quiz!");
-            return;
-        }
-
-        Quiz quiz = lesson.getQuiz();
-        StringBuilder details = new StringBuilder();
-        details.append("=== QUIZ DETAILS ===\n\n");
-        details.append("Quiz ID: ").append(quiz.getQuizId()).append("\n");
-        details.append("Total Questions: ").append(quiz.getTotalQuestions()).append("\n");
-        details.append("Passing Score: ").append(quiz.getPassingScore()).append("%\n");
-        details.append("Time Limit: ").append(
-                quiz.getTimeLimit() == 0 ? "No limit" : quiz.getTimeLimit() + " minutes").append("\n\n");
-
-        details.append("Questions:\n\n");
-        for (int i = 0; i < quiz.getQuestions().size(); i++) {
-            QuizQuestion q = quiz.getQuestions().get(i);
-            details.append("Q").append(i + 1).append(": ").append(q.getQuestion()).append("\n");
-            for (int j = 0; j < q.getOptions().size(); j++) {
-                details.append("  ").append(j + 1).append(". ").append(q.getOptions().get(j));
-                if (j == q.getAnswerIndex()) {
-                    details.append(" ✓ (Correct)");
-                }
-                details.append("\n");
-            }
-            details.append("\n");
-        }
-
-        JTextArea textArea = new JTextArea(details.toString());
-        textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new java.awt.Dimension(500, 400));
-
-        JOptionPane.showMessageDialog(
-                null,
-                scrollPane,
-                "Quiz Details - " + lesson.getTitle(),
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Helper Methods
