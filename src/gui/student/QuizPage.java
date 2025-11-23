@@ -13,6 +13,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import json.JsonUserDatabase;
+import model.course.Course;
 import model.course.CourseProgress;
 import model.course.Lesson;
 import model.course.LessonProgress;
@@ -20,164 +21,203 @@ import model.quiz.Quiz;
 import model.quiz.QuizAttempt;
 import model.quiz.QuizQuestion;
 import model.user.Student;
+import model.course.CertificateService;
 
 /**
  *
  * @author Nour
  */
 public class QuizPage extends javax.swing.JFrame {
+
     private Student student;
     private Lesson lesson;
+    private String courseId; // Add this field
     private int currentQuestionIndex = 0;
-    private float score=0;
-         private ButtonGroup group;
+    private float score = 0;
+    private ButtonGroup group;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(QuizPage.class.getName());
 
     /**
      * Creates new form QuizPage
      */
-    public QuizPage(Student student,Lesson lesson) {
-        this.lesson=lesson;
-        this.student=student;
+    public QuizPage(Student student, Lesson lesson, String courseId) {
+        this.lesson = lesson;
+        this.student = student;
+        this.courseId = courseId; // Store course ID
         initComponents();
         setLocationRelativeTo(null);
         optionsPanel.setLayout(new javax.swing.BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
-     nextButton.addActionListener(new ActionListener() {
+        nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleNextButton();
             }
-        });  
-     uploadQuiz();
-    }
-public void uploadQuiz() {
-    Quiz quiz = lesson.getQuiz();
-    ArrayList<QuizQuestion> questions = quiz.getQuestions();
-
-    // If no questions exist
-    if (questions.isEmpty()) {
-        questionLabel.setText("No questions found.");
-        return;
-    }
-
-    // Get the current question
-    QuizQuestion q = questions.get(currentQuestionIndex);
-
-    // Update question text
-    questionLabel.setText(q.getQuestion());
-
-    // Clear old options
-    optionsPanel.removeAll();
-    
-    // Make a fresh button group
-    group = new ButtonGroup();
-
-    // Add options
-    for (int i = 0; i < q.getOptions().size(); i++) {
-        String option = q.getOptions().get(i);
-        JRadioButton optionBtn = new JRadioButton(option);
-        optionBtn.setActionCommand(String.valueOf(i)); // index of option
-        group.add(optionBtn);
-        optionsPanel.add(optionBtn);
-    }
-
-    // Update button text (Next or Submit)
-    if (currentQuestionIndex == questions.size() - 1) {
-        nextButton.setText("Submit");
-    } else {
-        nextButton.setText("Next");
-    }
-
-    optionsPanel.revalidate();
-    optionsPanel.repaint();
-}
-private void handleNextButton() {
-    Quiz quiz = lesson.getQuiz();
-    ArrayList<QuizQuestion> questions = quiz.getQuestions();
-    boolean flag=false;
-    // Get selected answer
-    String selected;
-    if(group.getSelection() != null)
-            selected=group.getSelection().getActionCommand();
-                    else selected=null;
-
-    if (selected == null) {
-        JOptionPane.showMessageDialog(this, "Please select an answer.");
-        return;
-    }
-
-    int selectedIndex = Integer.parseInt(selected);
-    QuizQuestion currentQuestion = questions.get(currentQuestionIndex);
-    if(selectedIndex==currentQuestion.getAnswerIndex())
-        score++;
-    System.out.println("Student selected option " + selectedIndex);
-
-    if (currentQuestionIndex < questions.size() - 1) {
-        currentQuestionIndex++;
+        });
         uploadQuiz();
-    } else {
-        float finalScore=(float)(score/questions.size())*100;
-        if(finalScore<50)
-        {JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: "+ finalScore+"\nRetry Policy: "+quiz.getRetryPolicy());}
-        else JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: "+ finalScore);
-        this.dispose();
-        StringBuilder review = new StringBuilder();
-review.append("Correct Answers:\n\n");
+    }
 
-for (int i = 0; i < questions.size(); i++) {
-    QuizQuestion q = questions.get(i);
-    String correct = q.getOptions().get(q.getAnswerIndex());
+    public void uploadQuiz() {
+        Quiz quiz = lesson.getQuiz();
+        ArrayList<QuizQuestion> questions = quiz.getQuestions();
 
-    review.append((i+1) + ". ")
-          .append(q.getQuestion()).append("\n")
-          .append(" → Correct answer: ").append(correct)
-          .append("\n\n");
-}
-
-JOptionPane.showMessageDialog(this,
-        review.toString(),
-        "Answer Review",
-        JOptionPane.INFORMATION_MESSAGE);
-
-        
-        List<CourseProgress> courseProgress=student.getProgress();
-    
-        for(CourseProgress c:courseProgress)
-        {List<LessonProgress>lessonProgress=c.getLessonProgress();
-            for(LessonProgress l:lessonProgress )
-                if (l.getLessonId().equals(lesson.getLessonId()))
-              {flag=true;
-                  l.setQuizScore(finalScore);
-                  ArrayList<QuizAttempt> attempts=l.getAttempts();
-                  QuizAttempt attempt=new QuizAttempt(finalScore);
-                  attempts.add(attempt);
-                  l.setAttempts(attempts);
-               if(finalScore>=50)
-               {l.setCompleted(true);}
-                else{l.setCompleted(false);}
-                    break;}
-        
-        if(flag) break;
+        // If no questions exist
+        if (questions.isEmpty()) {
+            questionLabel.setText("No questions found.");
+            return;
         }
-       JsonUserDatabase reader = new JsonUserDatabase("users.json");
-       List<Student> students = reader.getStudents();
-      for (int i = 0; i < students.size(); i++) {
-    if (students.get(i).getUserId() == student.getUserId()) {  
-        students.set(i, student);   // update
-        break;
+
+        // Get the current question
+        QuizQuestion q = questions.get(currentQuestionIndex);
+
+        // Update question text
+        questionLabel.setText(q.getQuestion());
+
+        // Clear old options
+        optionsPanel.removeAll();
+
+        // Make a fresh button group
+        group = new ButtonGroup();
+
+        // Add options
+        for (int i = 0; i < q.getOptions().size(); i++) {
+            String option = q.getOptions().get(i);
+            JRadioButton optionBtn = new JRadioButton(option);
+            optionBtn.setActionCommand(String.valueOf(i)); // index of option
+            group.add(optionBtn);
+            optionsPanel.add(optionBtn);
+        }
+
+        // Update button text (Next or Submit)
+        if (currentQuestionIndex == questions.size() - 1) {
+            nextButton.setText("Submit");
+        } else {
+            nextButton.setText("Next");
+        }
+
+        optionsPanel.revalidate();
+        optionsPanel.repaint();
     }
-}
 
-reader.setStudents(students);
-reader.saveToFile("users.json");
+    private void handleNextButton() {
+        Quiz quiz = lesson.getQuiz();
+        ArrayList<QuizQuestion> questions = quiz.getQuestions();
+        boolean flag = false;
+        // Get selected answer
+        String selected;
+        if (group.getSelection() != null) {
+            selected = group.getSelection().getActionCommand();
+        } else {
+            selected = null;
+        }
 
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Please select an answer.");
+            return;
+        }
 
-        System.out.println("data saved successfully");
-        this.dispose();
-        CompleteLesson completeLesson=new CompleteLesson(student);
-        completeLesson.setVisible(true);
+        int selectedIndex = Integer.parseInt(selected);
+        QuizQuestion currentQuestion = questions.get(currentQuestionIndex);
+        if (selectedIndex == currentQuestion.getAnswerIndex()) {
+            score++;
+        }
+        System.out.println("Student selected option " + selectedIndex);
+
+        if (currentQuestionIndex < questions.size() - 1) {
+            currentQuestionIndex++;
+            uploadQuiz();
+        } else {
+            float finalScore = (float) (score / questions.size()) * 100;
+            if (finalScore < 50) {
+                JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: " + finalScore + "\nRetry Policy: " + quiz.getRetryPolicy());
+            } else {
+                JOptionPane.showMessageDialog(this, "Quiz completed!\nStudent Score is: " + finalScore);
+            }
+            this.dispose();
+            StringBuilder review = new StringBuilder();
+            review.append("Correct Answers:\n\n");
+
+            for (int i = 0; i < questions.size(); i++) {
+                QuizQuestion q = questions.get(i);
+                String correct = q.getOptions().get(q.getAnswerIndex());
+
+                review.append((i + 1) + ". ")
+                        .append(q.getQuestion()).append("\n")
+                        .append(" → Correct answer: ").append(correct)
+                        .append("\n\n");
+            }
+
+            JOptionPane.showMessageDialog(this,
+                    review.toString(),
+                    "Answer Review",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            List<CourseProgress> courseProgress = student.getProgress();
+
+            for (CourseProgress c : courseProgress) {
+                List<LessonProgress> lessonProgress = c.getLessonProgress();
+                for (LessonProgress l : lessonProgress) {
+                    if (l.getLessonId().equals(lesson.getLessonId())) {
+                        flag = true;
+                        l.setQuizScore(finalScore);
+                        ArrayList<QuizAttempt> attempts = l.getAttempts();
+                        QuizAttempt attempt = new QuizAttempt(finalScore);
+                        attempts.add(attempt);
+                        l.setAttempts(attempts);
+                        if (finalScore >= 50) {
+                            l.setCompleted(true);
+                        } else {
+                            l.setCompleted(false);
+                        }
+                        break;
+                    }
+                }
+
+                if (flag) {
+                    break;
+                }
+            }
+            if (courseId != null) {
+                Course course = findCourseById(courseId);
+                if (course != null) {
+                   boolean certificateGenerated = CertificateService.generateCertificateIfCompleted(student, course);
+                    if (certificateGenerated) {
+                        JOptionPane.showMessageDialog(this,
+                                "Congratulations! You've completed the course!\n"
+                                + "A certificate has been generated for: " + course.getTitle(),
+                                "Course Completed!",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+            JsonUserDatabase reader = new JsonUserDatabase("users.json");
+            List<Student> students = reader.getStudents();
+            for (int i = 0; i < students.size(); i++) {
+                if (students.get(i).getUserId() == student.getUserId()) {
+                    students.set(i, student);   // update
+                    break;
+                }
+            }
+
+            reader.setStudents(students);
+            reader.saveToFile("users.json");
+
+            System.out.println("data saved successfully");
+            this.dispose();
+            CompleteLesson completeLesson = new CompleteLesson(student);
+            completeLesson.setVisible(true);
+        }
     }
+    private Course findCourseById(String courseId) {
+    logic.userRole.StudentRole sr = new logic.userRole.StudentRole();
+    List<Course> allCourses = sr.viewCourses(student);
+    
+    for (Course course : allCourses) {
+        if (course.getCourseId().equals(courseId)) {
+            return course;
+        }
+    }
+    return null;
 }
 
     /**

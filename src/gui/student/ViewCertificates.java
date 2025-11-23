@@ -4,19 +4,111 @@
  */
 package gui.student;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.course.Certificate;
+import model.user.Student;
+import gui.dashboards.StudentBoard;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Nour
  */
 public class ViewCertificates extends javax.swing.JFrame {
-    
+
+    private Student student;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewCertificates.class.getName());
 
     /**
      * Creates new form ViewCertificates
      */
-    public ViewCertificates() {
+    /**
+     * Creates new form ViewCertificates
+     *
+     * @param student
+     */
+    public ViewCertificates(Student student) {
+        this.student = student;
         initComponents();
+        loadCertificates();
+        setLocationRelativeTo(null); // Center the window
+    }
+
+    private void loadCertificates() {
+        DefaultTableModel model = (DefaultTableModel) CertTable.getModel();
+        model.setRowCount(0);  // Clear table
+
+        List<Certificate> certificates = student.getCertificates();
+
+        if (certificates == null || certificates.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "You haven't earned any certificates yet.\nComplete courses to earn certificates!",
+                    "No Certificates",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Add certificates to table with your specified columns
+        for (Certificate cert : certificates) {
+            Object[] row = new Object[]{
+                cert.getCertificateId(), // String - Certificate ID
+                cert.getCourseId(), // String - Course ID  
+                cert.getIssueDate().toString() // String - Issue Date
+            };
+            model.addRow(row);
+        }
+    }
+
+    private void downloadCertificate() {
+        int selectedRow = CertTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a certificate to download.",
+                    "No Selection",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String certificateId = (String) CertTable.getValueAt(selectedRow, 0);
+        String courseId = (String) CertTable.getValueAt(selectedRow, 1);
+
+        // Find the selected certificate
+        Certificate selectedCert = null;
+        for (Certificate cert : student.getCertificates()) {
+            if (cert.getCertificateId().equals(certificateId)) {
+                selectedCert = cert;
+                break;
+            }
+        }
+
+        if (selectedCert != null) {
+            try {
+                // Generate JSON file
+                String fileName = "certificate_" + certificateId + ".json";
+                try (FileWriter file = new FileWriter(fileName)) {
+                    file.write(selectedCert.toJson());
+                    file.flush();
+                }
+
+                JOptionPane.showMessageDialog(this,
+                        "Certificate downloaded successfully!\n"
+                        + "File: " + fileName + "\n"
+                        + "Location: Current directory",
+                        "Download Complete",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Error downloading certificate: " + e.getMessage(),
+                        "Download Error",
+                        JOptionPane.ERROR_MESSAGE);
+                logger.severe("Certificate download error: " + e.getMessage());
+            }
+        }
     }
 
     /**
@@ -28,21 +120,168 @@ public class ViewCertificates extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        CertTable = new javax.swing.JTable();
+        jdownload = new javax.swing.JButton();
+        jback = new javax.swing.JButton();
+        jviewDetails = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setText("My Certificates");
+
+        CertTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Certificate ID", "Course Id", "Issue Date"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(CertTable);
+
+        jdownload.setBackground(new java.awt.Color(204, 204, 255));
+        jdownload.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jdownload.setForeground(new java.awt.Color(0, 0, 0));
+        jdownload.setText("Download Json");
+        jdownload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jdownloadActionPerformed(evt);
+            }
+        });
+
+        jback.setBackground(new java.awt.Color(204, 204, 255));
+        jback.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jback.setForeground(new java.awt.Color(0, 0, 0));
+        jback.setText("Back");
+        jback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbackActionPerformed(evt);
+            }
+        });
+
+        jviewDetails.setBackground(new java.awt.Color(204, 204, 255));
+        jviewDetails.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jviewDetails.setForeground(new java.awt.Color(0, 0, 0));
+        jviewDetails.setText("View Details");
+        jviewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jviewDetailsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(jdownload, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jback, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(67, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(40, 40, 40)
+                    .addComponent(jviewDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(490, Short.MAX_VALUE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jback)
+                    .addComponent(jdownload))
+                .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(462, Short.MAX_VALUE)
+                    .addComponent(jviewDetails)
+                    .addGap(16, 16, 16)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbackActionPerformed
+        // TODO add your handling code here:
+       this.dispose();
+       new StudentBoard(student).setVisible(true);
+    }//GEN-LAST:event_jbackActionPerformed
+
+    private void jdownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jdownloadActionPerformed
+        // TODO add your handling code here:
+        downloadCertificate();
+    }//GEN-LAST:event_jdownloadActionPerformed
+
+    private void jviewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jviewDetailsActionPerformed
+        // TODO add your handling code here:
+                int selectedRow = CertTable.getSelectedRow();
+        
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, 
+                "Please select a certificate to view details.", 
+                "No Selection", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String certificateId = (String) CertTable.getValueAt(selectedRow, 0);
+        String courseId = (String) CertTable.getValueAt(selectedRow, 1);
+        String issueDate = (String) CertTable.getValueAt(selectedRow, 2);
+
+        // Build details message
+        StringBuilder details = new StringBuilder();
+        details.append("=== CERTIFICATE DETAILS ===\n\n");
+        details.append("Certificate ID: ").append(certificateId).append("\n");
+        details.append("Student ID: ").append(student.getUserId()).append("\n");
+        details.append("Student Name: ").append(student.getUserName()).append("\n");
+        details.append("Course ID: ").append(courseId).append("\n");
+        details.append("Issue Date: ").append(issueDate).append("\n\n");
+        details.append("This certifies that ").append(student.getUserName())
+               .append(" has successfully completed the course.");
+
+        JOptionPane.showMessageDialog(this,
+            details.toString(),
+            "Certificate: " + certificateId,
+            JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jviewDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -66,9 +305,15 @@ public class ViewCertificates extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ViewCertificates().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable CertTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jback;
+    private javax.swing.JButton jdownload;
+    private javax.swing.JButton jviewDetails;
     // End of variables declaration//GEN-END:variables
 }
