@@ -24,7 +24,7 @@ public class JsonCoursesDatabase extends JsonHandler {
 
     @Override
     protected void processJsonArray(JsonArray jsonArray) {//to know if its course or lesson
-        Gson gson = new Gson();
+        Gson gson = json.GsonUtils.createGson();
         for (JsonElement element : jsonArray) {
             JsonObject obj = element.getAsJsonObject();
             if (obj.has("courseId")) {
@@ -45,7 +45,7 @@ public class JsonCoursesDatabase extends JsonHandler {
 
     @Override
     protected JsonArray buildJsonArray() {
-        Gson gson = new Gson();
+        Gson gson = json.GsonUtils.createGson();
         JsonArray jsonArray = new JsonArray();
         for (Course course : courses) {
             jsonArray.add(gson.toJsonTree(course));

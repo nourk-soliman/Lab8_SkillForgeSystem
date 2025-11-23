@@ -35,10 +35,12 @@ public class JsonUserDatabase extends JsonHandler {
         JsonArray jsonArray = readJsonArray(filename);
         processJsonArray(jsonArray);
     }
+    
+
 
     @Override
     protected void processJsonArray(JsonArray jsonArray) {//to know if its student or instructor
-        Gson gson = new Gson();
+        Gson gson = json.GsonUtils.createGson();
         for (JsonElement element : jsonArray) {
             if (!element.isJsonObject()) {
                 continue;
@@ -64,7 +66,7 @@ public class JsonUserDatabase extends JsonHandler {
 
     @Override
     protected JsonArray buildJsonArray() {
-        Gson gson = new Gson();
+        Gson gson = json.GsonUtils.createGson();
         JsonArray jsonArray = new JsonArray();
 
         for (Student student : students) {
