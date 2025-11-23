@@ -9,10 +9,12 @@ package model.quiz;
  * @author Nour
  */
 public class QuizAttempt {
+   private float quizScore;
 
-    public QuizAttempt(float finalScore) {
+    public QuizAttempt(float quizScore) {
+     this.quizScore=quizScore;
     }
-    private float quizScore;
+    
 
     public float getQuizScore() {
         return quizScore;
