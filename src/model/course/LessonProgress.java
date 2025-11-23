@@ -17,10 +17,11 @@ public class LessonProgress {
    private boolean completed;
    private ArrayList<QuizAttempt> attempts;
 
-    public LessonProgress(String lessonId, int quizScore, boolean completed) {
+    public LessonProgress(String lessonId, float quizScore, boolean completed) {
         this.lessonId = lessonId;
         this.quizScore = quizScore;
         this.completed = completed;
+        this.attempts=new ArrayList<>();
     }
 
     public String getLessonId() {
