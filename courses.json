@@ -2,9 +2,8 @@
   {
     "courseId": "CS101",
     "title": "Python",
-    "description": "An introductory course to Python programming.",
     "instructorId": 9657,
-    "approvalStatus": "APPROVED",
+    "description": "An introductory course to Python programming.",
     "lessons": [
       {
         "lessonId": "py1",
@@ -18,15 +17,24 @@
           "questions": [
             {
               "question": "What is the file extension for a Python script?",
-              "options": [".java", ".py", ".exe"],
-              "answerIndex": 1
+              "answerIndex": 1,
+              "options": [
+                ".java",
+                ".py",
+                ".exe"
+              ]
             },
             {
               "question": "Which command runs a Python file?",
-              "options": ["python file.py", "run file", "execute file"],
-              "answerIndex": 0
+              "answerIndex": 0,
+              "options": [
+                "python file.py",
+                "run file",
+                "execute file"
+              ]
             }
-          ]
+          ],
+          "retryPolicy": "unlimited"
         }
       },
       {
@@ -41,26 +49,25 @@
           "questions": [
             {
               "question": "Which of the following is a valid Python variable?",
-              "options": ["2name", "name2", "name-1"],
-              "answerIndex": 1
+              "answerIndex": 1,
+              "options": [
+                "2name",
+                "name2",
+                "name-1"
+              ]
             }
-          ]
+          ],
+          "retryPolicy": "unlimited"
         }
       }
     ],
-    "Students": [1234, 3456],
-    "performanceStats": {
-      "averageScore": 88,
-      "completionRate": 70
-    }
+    "approvalStatus": "APPROVED"
   },
-
   {
     "courseId": "DR202",
     "title": "Learn how to drive",
-    "description": "A comprehensive course on driving skills and road safety.",
     "instructorId": 9657,
-    "approvalStatus": "PENDING",
+    "description": "A comprehensive course on driving skills and road safety.",
     "lessons": [
       {
         "lessonId": "ds1",
@@ -74,10 +81,15 @@
           "questions": [
             {
               "question": "What does a red octagon sign mean?",
-              "options": ["Stop", "Yield", "Turn Right"],
-              "answerIndex": 0
+              "answerIndex": 0,
+              "options": [
+                "Stop",
+                "Yield",
+                "Turn Right"
+              ]
             }
-          ]
+          ],
+          "retryPolicy": "unlimited"
         }
       },
       {
@@ -92,73 +104,68 @@
           "questions": [
             {
               "question": "Which foot is used for the brake pedal?",
-              "options": ["Left", "Right"],
-              "answerIndex": 1
+              "answerIndex": 1,
+              "options": [
+                "Left",
+                "Right"
+              ]
             }
-          ]
+          ],
+          "retryPolicy": "unlimited"
         }
       }
     ],
-    "Students": [3456],
-    "performanceStats": {
-      "averageScore": 75,
-      "completionRate": 40
-    }
+    "approvalStatus": "PENDING"
   },
-
   {
-    "courseId": "CS103",
-    "title": "Java Basics",
-    "description": "A beginner-friendly introduction to Java programming.",
-    "instructorId": 9667,
-    "approvalStatus": "APPROVED",
+    "courseId": "cce",
+    "title": "ds",
+    "instructorId": 3640,
+    "description": "sd",
     "lessons": [
       {
-        "lessonId": "j1",
-        "title": "Introduction to Java",
-        "content": "Covers the purpose of Java, how the JVM works, and basic program structure.",
-        "optionalResources": [
-          "https://docs.oracle.com/javase/tutorial/getStarted/intro/index.html",
-          "https://www.w3schools.com/java/java_intro.asp"
-        ],
+        "lessonId": "dsf",
+        "title": "sdf",
+        "content": "dsf",
+        "optionalResources": [],
         "quiz": {
           "questions": [
             {
-              "question": "Which keyword is used to define a class in Java?",
-              "options": ["class", "define", "struct"],
-              "answerIndex": 0
-            },
-            {
-              "question": "Which method is the entry point of a Java program?",
-              "options": ["start()", "run()", "main()"],
-              "answerIndex": 2
+              "question": "name",
+              "answerIndex": 2,
+              "options": [
+                "assa",
+                "asas",
+                "asas",
+                "asas"
+              ]
             }
-          ]
+          ],
+          "retryPolicy": "unlimited"
         }
       },
       {
-        "lessonId": "j2",
-        "title": "Variables and Data Types",
-        "content": "Explains integers, doubles, booleans, characters, and Strings.",
-        "optionalResources": [
-          "https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html",
-          "https://www.geeksforgeeks.org/data-types-in-java/"
-        ],
+        "lessonId": "dfs",
+        "title": "dsf",
+        "content": "dsf",
+        "optionalResources": [],
         "quiz": {
           "questions": [
             {
-              "question": "Which of the following is NOT a Java primitive type?",
-              "options": ["int", "String", "boolean"],
-              "answerIndex": 1
+              "question": "esmak eh",
+              "answerIndex": 1,
+              "options": [
+                "moaz",
+                "refaat",
+                "ali"
+              ]
             }
-          ]
+          ],
+          "retryPolicy": "unlimited"
         }
       }
     ],
-    "Students": [1234, 3446],
-    "performanceStats": {
-      "averageScore": 82,
-      "completionRate": 60
-    }
+    "students": [],
+    "approvalStatus": "PENDING"
   }
 ]
