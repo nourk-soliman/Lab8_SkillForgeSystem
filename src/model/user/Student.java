@@ -11,6 +11,10 @@ public class Student extends User {
     private List<String> enrolledCourses;
     private List<String> completedLessons;
     private List<CourseProgress> progress;
+
+    public List<Certificate> getCertificates() {
+        return certificates;
+    }
     private List<Certificate> certificates;
 
     public List<CourseProgress> getProgress() {
