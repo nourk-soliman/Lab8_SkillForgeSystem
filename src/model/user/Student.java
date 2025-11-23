@@ -30,6 +30,7 @@ public class Student extends User {
         super();
         this.enrolledCourses = new ArrayList<>();
         this.completedLessons = new ArrayList<>();
+        this.certificates=new ArrayList<>();
         
     }
 
