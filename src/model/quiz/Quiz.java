@@ -11,14 +11,25 @@ import java.util.ArrayList;
  */
 public class Quiz {
  private ArrayList<QuizQuestion> questions;
-
-    public Quiz(ArrayList<QuizQuestion> questions) {
+private String retryPolicy;
+    public Quiz(ArrayList<QuizQuestion> questions,String retryPolicy) {
         try{
         setQuestions(questions);}
         catch(IllegalArgumentException e)
         {}
+        this.retryPolicy=retryPolicy;
         
     }
+
+    public String getRetryPolicy() {
+        return retryPolicy;
+    }
+
+    public void setRetryPolicy(String retryPolicy) {
+        this.retryPolicy = retryPolicy;
+    }
+
+
 
     public ArrayList<QuizQuestion> getQuestions() {
         return questions;
@@ -31,7 +42,7 @@ public class Quiz {
     }
  
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ArrayList<QuizQuestion> questions=new ArrayList<>();
         ArrayList<String> options=new ArrayList<>();
         options.add("one.");
@@ -40,6 +51,6 @@ public class Quiz {
         for(QuizQuestion question:questions)
             question.displayInfo();
         Quiz q=new Quiz(questions);
-    }
+    }*/
     
 }

@@ -1,47 +1,16 @@
 /*
- * Course Approval Status Enum
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.course;
 
 /**
- * Represents the approval status of a course
- * 
- * @author moaz
+ *
+ * @author AltAWKEl
  */
-public enum CourseStatus {
-    PENDING("Pending Review"),
-    APPROVED("Approved"),
-    REJECTED("Rejected");
+ public enum CourseStatus {
+        PENDING,
+        APPROVED,
+        REJECTED
+    } 
 
-    private final String displayName;
-
-    CourseStatus(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    @Override
-    public String toString() {
-        return displayName;
-    }
-
-    /**
-     * Get CourseStatus from string
-     */
-    public static CourseStatus fromString(String status) {
-        if (status == null) {
-            return PENDING;
-        }
-
-        for (CourseStatus cs : CourseStatus.values()) {
-            if (cs.name().equalsIgnoreCase(status) ||
-                    cs.displayName.equalsIgnoreCase(status)) {
-                return cs;
-            }
-        }
-        return PENDING;
-    }
-}

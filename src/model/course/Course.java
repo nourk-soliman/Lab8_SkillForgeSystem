@@ -1,47 +1,62 @@
 /*
- * Course Model Class
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model.course;
 
+import json.JsonCoursesDatabase;
 import java.util.List;
-
+import model.user.Instructor;
+import java.util.ArrayList;
+import model.course.Lesson;
 /**
- * Represents a course in the system
- * 
- * @author moaz
+ *
+ * @author Mariam Yamen
  */
 public class Course {
     private String courseId;
     private String title;
     private int instructorId;
     private String description;
-    private List<Lesson> lessons;
-    private List<Integer> students; // List of student IDs
+    List<Lesson> lessons;
+    List<Integer> students;
     private CourseStatus approvalStatus;
+    
 
-    // Constructor
-    public Course(String courseId, String title, int instructorId, String description,
-            List<Lesson> lessons, List<Integer> students) {
+    public Course(String courseId, String title, int instructorId, String description, List<Lesson> lessons, List<Integer> students,CourseStatus approvalStatus) {
         this.courseId = courseId;
         this.title = title;
         this.instructorId = instructorId;
         this.description = description;
         this.lessons = lessons;
         this.students = students;
-        this.approvalStatus = CourseStatus.PENDING; // Default status
+        this.approvalStatus = approvalStatus;
     }
-
-    // Default constructor
-    public Course() {
+ public Course(String courseId, String title, int instructorId, String description, List<Lesson> lessons, List<Integer> students) {
+        this.courseId = courseId;
+        this.title = title;
+        this.instructorId = instructorId;
+        this.description = description;
+        this.lessons = lessons;
+        this.students = students;
     }
-
-    // Getters and Setters
+   
     public String getCourseId() {
         return courseId;
     }
 
     public void setCourseId(String courseId) {
-        this.courseId = courseId;
+           JsonCoursesDatabase r = new JsonCoursesDatabase("courses.json");
+    List<Course> courses =r.getCourses();
+
+    for (Course course : courses) {
+        if (course.getCourseId() != null && course.getCourseId().equals(courseId)) {
+            System.out.println("Course ID must be unique.");
+            return;
+        }
+    }
+
+    this.courseId = courseId;
     }
 
     public String getTitle() {
@@ -57,6 +72,8 @@ public class Course {
     }
 
     public void setInstructorId(int instructorId) {
+        Instructor i=new Instructor();
+        i.setUserId(instructorId);
         this.instructorId = instructorId;
     }
 
@@ -83,7 +100,7 @@ public class Course {
     public void setStudents(List<Integer> students) {
         this.students = students;
     }
-
+    
     public CourseStatus getApprovalStatus() {
         return approvalStatus;
     }
@@ -91,98 +108,50 @@ public class Course {
     public void setApprovalStatus(CourseStatus approvalStatus) {
         this.approvalStatus = approvalStatus;
     }
+    
+ public void displayInfo() {
+    System.out.println("=== Course Information ===");
+    System.out.println("Course ID      : " + courseId);
+    System.out.println("Title          : " + title);
+    System.out.println("Instructor ID  : " + instructorId);
+    System.out.println("Description    : " + description);
 
-    // Helper methods
-
-    /**
-     * Add a lesson to the course
-     */
-    public void addLesson(Lesson lesson) {
-        if (!lessons.contains(lesson)) {
-            lessons.add(lesson);
-        }
-    }
-
-    /**
-     * Remove a lesson from the course
-     */
-    public void removeLesson(String lessonId) {
-        lessons.removeIf(lesson -> lesson.getLessonId().equals(lessonId));
-    }
-
-    /**
-     * Add a student to the course
-     */
-    public void enrollStudent(int studentId) {
-        if (!students.contains(studentId)) {
-            students.add(studentId);
-        }
-    }
-
-    /**
-     * Remove a student from the course
-     */
-    public void unenrollStudent(int studentId) {
-        students.remove(Integer.valueOf(studentId));
-    }
-
-    /**
-     * Get lesson by ID
-     */
-    public Lesson getLessonById(String lessonId) {
+    // Display lessons
+    System.out.println("\nLessons:");
+    if (lessons == null || lessons.isEmpty()) {
+        System.out.println("  No lessons in this course.");
+    } else {
         for (Lesson lesson : lessons) {
-            if (lesson.getLessonId().equals(lessonId)) {
-                return lesson;
-            }
+            System.out.println("  - " + lesson.getLessonId() + " | " + lesson.getTitle());
         }
-        return null;
     }
 
-    /**
-     * Check if course is approved
-     */
-    public boolean isApproved() {
-        return approvalStatus == CourseStatus.APPROVED;
+    // Display students
+    System.out.println("\nEnrolled Students:");
+    if (students == null || students.isEmpty()) {
+        System.out.println("  No students enrolled.");
+    } else {
+        for (Integer studentId : students) {
+            System.out.println("  - Student ID: " + studentId);
+        }
     }
 
-    /**
-     * Check if course is pending approval
-     */
-    public boolean isPending() {
-        return approvalStatus == CourseStatus.PENDING;
-    }
+    System.out.println("==========================\n");
+}
 
-    /**
-     * Check if course is rejected
-     */
-    public boolean isRejected() {
-        return approvalStatus == CourseStatus.REJECTED;
+    
+    
+    
+      public static void main(String[] args) {
+        JsonCoursesDatabase r=new JsonCoursesDatabase("courses.json");
+    List<Course>c=r.getCourses();
+       for(Course course:c)
+           course.displayInfo();
+     
     }
-
-    /**
-     * Display course information
-     */
-    public void displayInfo() {
-        System.out.println("=== Course Info ===");
-        System.out.println("Course ID: " + courseId);
-        System.out.println("Title: " + title);
-        System.out.println("Instructor ID: " + instructorId);
-        System.out.println("Description: " + description);
-        System.out.println("Number of Lessons: " + lessons.size());
-        System.out.println("Enrolled Students: " + students.size());
-        System.out.println("Approval Status: " + approvalStatus);
-        System.out.println("==================");
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "courseId='" + courseId + '\'' +
-                ", title='" + title + '\'' +
-                ", instructorId=" + instructorId +
-                ", status=" + approvalStatus +
-                ", lessons=" + lessons.size() +
-                ", students=" + students.size() +
-                '}';
-    }
+    
+  
+    
+    
+    
 }

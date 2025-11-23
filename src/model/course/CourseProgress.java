@@ -20,6 +20,12 @@ public class CourseProgress {
         lessonProgress=new ArrayList<>();
         completed=false;
     }
+    
+    public void UpdateComplete(ArrayList<LessonProgress> lessonProgress){
+       for(LessonProgress l:lessonProgress)
+       {if(!l.isCompleted()) {completed=false; return;}}
+       completed=true;
+    }
 
     public CourseProgress(String courseId, ArrayList<LessonProgress> lessonProgress, boolean completed) {
         this.courseId = courseId;
