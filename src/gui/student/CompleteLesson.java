@@ -549,7 +549,7 @@ if (currentLessonIndex >= 0) {
 
 // Open QuizPage
 this.dispose();
-new QuizPage(s, selectedLesson).setVisible(true);
+new QuizPage(s, selectedLesson,courseId).setVisible(true);
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
