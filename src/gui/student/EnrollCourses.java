@@ -5,6 +5,7 @@
 package gui.student;
 
 import gui.dashboards.StudentBoard;
+import java.util.ArrayList;
 import model.course.Course;
 import model.user.Student;
 import logic.userRole.StudentRole;
@@ -12,8 +13,12 @@ import json.JsonUserDatabase;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import json.JsonCoursesDatabase;
+import model.course.CourseProgress;
 import model.course.CourseStatus;
 import static model.course.CourseStatus.APPROVED;
+import model.course.Lesson;
+import model.course.LessonProgress;
 import model.user.User;
 
 /**
@@ -184,7 +189,22 @@ CourseStatus cs = APPROVED;
         if (confirm == JOptionPane.YES_OPTION) {
             // Add course to student's enrolled courses
             s.getEnrolledCourses().add(courseId);
-
+            JsonCoursesDatabase coursesReader=new JsonCoursesDatabase("courses.json");
+            List<Course> courses=coursesReader.getCourses();
+            Course temp=null;
+            for(Course course:courses)
+            {if(course.getCourseId().equals(courseId))
+                {temp=course; break;}}
+            List<Lesson>lessons=temp.getLessons();
+            ArrayList<LessonProgress>lessonProgress = new ArrayList<>();
+            CourseProgress courseProgress=new CourseProgress(courseId);
+            for(Lesson lesson:lessons)
+            {LessonProgress progress=new LessonProgress(lesson.getLessonId(), 0, false);
+            lessonProgress.add(progress);}
+            courseProgress.setLessonProgress(lessonProgress);
+            s.getProgress().add(courseProgress);
+            
+            
             // Save to file
             JsonUserDatabase userReader = new JsonUserDatabase("users.json");
             List<Student> students = userReader.getStudents();
