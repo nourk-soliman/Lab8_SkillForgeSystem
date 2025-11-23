@@ -1,0 +1,353 @@
+[
+  {
+    "courseId": "CS101",
+    "title": "Python",
+    "instructorId": 9657,
+    "description": "An introductory course to Python programming.",
+    "lessons": [
+      {
+        "lessonId": "py1",
+        "title": "How to start python",
+        "content": "This lesson covers the basics of getting started with Python, including installation and writing your first program.",
+        "optionalResources": [
+          "https://www.python.org/about/gettingstarted/",
+          "https://realpython.com/python-first-steps/"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "What is the file extension for a Python script?",
+              "answerIndex": 1,
+              "options": [
+                ".java",
+                ".py",
+                ".exe"
+              ]
+            },
+            {
+              "question": "Which command runs a Python file?",
+              "answerIndex": 0,
+              "options": [
+                "python file.py",
+                "run file",
+                "execute file"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "py2",
+        "title": "Data types and variables",
+        "content": "This lesson explains the different data types in Python and how to use variables to store data.",
+        "optionalResources": [
+          "https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator",
+          "https://www.w3schools.com/python/python_variables.asp"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "Which of the following is a valid Python variable?",
+              "answerIndex": 1,
+              "options": [
+                "2name",
+                "name2",
+                "name-1"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      }
+    ],
+    "approvalStatus": "APPROVED"
+  },
+  {
+    "courseId": "CS103",
+    "title": "Java Programming",
+    "instructorId": 9667,
+    "description": "A comprehensive course on Java programming language and object-oriented concepts.",
+    "lessons": [
+      {
+        "lessonId": "java1",
+        "title": "Introduction to Java",
+        "content": "This lesson covers the basics of Java programming, including setting up the development environment and writing your first Java program.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/getStarted/index.html",
+          "https://www.w3schools.com/java/java_intro.asp"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "What is the file extension for a Java source file?",
+              "answerIndex": 1,
+              "options": [
+                ".py",
+                ".java",
+                ".class",
+                ".jar"
+              ]
+            },
+            {
+              "question": "Which keyword is used to define a class in Java?",
+              "answerIndex": 0,
+              "options": [
+                "class",
+                "interface",
+                "object",
+                "type"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "java2",
+        "title": "Object-Oriented Programming",
+        "content": "This lesson explains the fundamental concepts of object-oriented programming in Java including classes, objects, and inheritance.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/java/concepts/",
+          "https://www.geeksforgeeks.org/object-oriented-programming-oops-concept-in-java/"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "Which OOP concept allows one class to inherit features from another class?",
+              "answerIndex": 2,
+              "options": [
+                "Polymorphism",
+                "Encapsulation",
+                "Inheritance",
+                "Abstraction"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "java3",
+        "title": "Exception Handling",
+        "content": "This lesson covers how to handle exceptions and errors in Java programs using try-catch blocks.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/essential/exceptions/",
+          "https://www.javatpoint.com/exception-handling-in-java"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "Which keyword is used to explicitly throw an exception?",
+              "answerIndex": 1,
+              "options": [
+                "catch",
+                "throw",
+                "throws",
+                "exception"
+              ]
+            },
+            {
+              "question": "What is the parent class of all exceptions in Java?",
+              "answerIndex": 0,
+              "options": [
+                "Throwable",
+                "Exception",
+                "Error",
+                "RuntimeException"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      }
+    ],
+    "approvalStatus": "APPROVED"
+  },
+  {
+    "courseId": "DR202",
+    "title": "Learn how to drive",
+    "instructorId": 9657,
+    "description": "A comprehensive course on driving skills and road safety.",
+    "lessons": [
+      {
+        "lessonId": "ds1",
+        "title": "Learn the road signs",
+        "content": "This lesson introduces the various road signs and their meanings to ensure safe driving.",
+        "optionalResources": [
+          "https://www.dmv.org/learn-to-drive/road-signs.php",
+          "https://www.safedrivingforlife.info/road-signs"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "What does a red octagon sign mean?",
+              "answerIndex": 0,
+              "options": [
+                "Stop",
+                "Yield",
+                "Turn Right"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "dt1",
+        "title": "Basic driving techniques",
+        "content": "This lesson covers fundamental driving techniques including steering, braking, and parking.",
+        "optionalResources": [
+          "https://www.driving-tests.org/beginner-driving-tips/",
+          "https://www.nhtsa.gov/road-safety/driver-safety"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "Which foot is used for the brake pedal?",
+              "answerIndex": 1,
+              "options": [
+                "Left",
+                "Right"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      }
+    ],
+    "approvalStatus": "APPROVED"
+  },
+  {
+    "courseId": "DR204",
+    "title": "Advanced Driving Techniques",
+    "instructorId": 9667,
+    "description": "An advanced course covering defensive driving, highway driving, and emergency maneuvers.",
+    "lessons": [
+      {
+        "lessonId": "adv1",
+        "title": "Defensive Driving Strategies",
+        "content": "This lesson covers advanced defensive driving techniques to anticipate and avoid potential hazards on the road.",
+        "optionalResources": [
+          "https://www.nsc.org/road-safety/safety-topics/defensive-driving",
+          "https://www.aaa.com/AAA/common/aar/files/AAA-Defensive-Driving.pdf"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "What is the recommended following distance in good weather conditions?",
+              "answerIndex": 1,
+              "options": [
+                "1 second",
+                "3 seconds",
+                "5 seconds",
+                "7 seconds"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "adv2",
+        "title": "Highway and Freeway Driving",
+        "content": "This lesson focuses on safe techniques for merging, lane changes, and navigating high-speed roads.",
+        "optionalResources": [
+          "https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/freeway-driving/",
+          "https://www.safemotorist.com/articles/highway_driving.aspx"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "When merging onto a highway, what should you do?",
+              "answerIndex": 2,
+              "options": [
+                "Stop and wait for an opening",
+                "Merge immediately without checking",
+                "Adjust your speed to match traffic and merge smoothly",
+                "Use the shoulder to merge"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "adv3",
+        "title": "Emergency Maneuvers",
+        "content": "This lesson teaches how to handle emergency situations like skids, brake failure, and obstacle avoidance.",
+        "optionalResources": [
+          "https://www.drivingtests.co.nz/roadcode/car/theory/emergency-driving/",
+          "https://www.rac.co.uk/drive/advice/learning-to-drive/how-to-deal-with-driving-emergencies/"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "If your vehicle starts to skid, what should you do?",
+              "answerIndex": 0,
+              "options": [
+                "Steer in the direction you want to go",
+                "Brake hard immediately",
+                "Accelerate to regain control",
+                "Turn the steering wheel back and forth rapidly"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      }
+    ],
+    "approvalStatus": "REJECTED"
+  },
+  {
+    "courseId": "cce",
+    "title": "ds",
+    "instructorId": 3640,
+    "description": "sd",
+    "lessons": [
+      {
+        "lessonId": "dsf",
+        "title": "sdf",
+        "content": "dsf",
+        "optionalResources": [],
+        "quiz": {
+          "questions": [
+            {
+              "question": "name",
+              "answerIndex": 2,
+              "options": [
+                "assa",
+                "asas",
+                "asas",
+                "asas"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "dfs",
+        "title": "dsf",
+        "content": "dsf",
+        "optionalResources": [],
+        "quiz": {
+          "questions": [
+            {
+              "question": "esmak eh",
+              "answerIndex": 1,
+              "options": [
+                "moaz",
+                "refaat",
+                "ali"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      }
+    ],
+    "students": [],
+    "approvalStatus": "PENDING"
+  }
+]
