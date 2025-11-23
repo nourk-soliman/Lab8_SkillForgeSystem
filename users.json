@@ -3,13 +3,14 @@
     "enrolledCourses": [
       "CS101"
     ],
+    "completedLessons": [],
     "progress": [
       {
         "courseId": "CS101",
         "lessonProgress": [
           {
             "lessonId": "py1",
-            "quizScore": 85.0,
+            "quizScore": 50.0,
             "completed": true,
             "attempts": [
               {
@@ -19,26 +20,18 @@
           },
           {
             "lessonId": "py2",
-            "quizScore": 0.0,
-            "completed": false,
+            "quizScore": 100.0,
+            "completed": true,
             "attempts": []
           }
         ],
         "completed": false
       }
     ],
-    "certificates": [
-      {
-        "issueDate": "2025-11-22",
-        "studentId": 1234,
-        "courseId": "CS101",
-        "certificateId": "CERT_CS101_1234_001"
-      }
-    ],
     "userId": 1234,
     "username": "Salma",
     "email": "mss12@gmail.com",
-    "passwordHash": "f7c3bc1d808e04732adf679965ccc34ca7ae3441f0f1c1468e8d7f0a0f8f0f0c",
+    "passwordHash": "d444b274fac69a6a33f580168d2bd0b27f66da2ca95c887eeec971a1932e226b",
     "role": "student"
   },
   {
@@ -46,6 +39,7 @@
       "CS101",
       "DR202"
     ],
+    "completedLessons": [],
     "progress": [
       {
         "courseId": "CS101",
@@ -53,7 +47,7 @@
           {
             "lessonId": "py1",
             "quizScore": 50.0,
-            "completed": false,
+            "completed": true,
             "attempts": [
               {
                 "quizScore": 50.0
@@ -88,18 +82,18 @@
         "completed": false
       }
     ],
-    "certificates": [],
     "userId": 3456,
     "username": "Samer",
     "email": "samer123@gmail.com",
-    "passwordHash": "2c74fd17edafd80e8447b0d46741ee243b7eb74dd2149a0f0eea5c9f0f8e5a3c",
+    "passwordHash": "2ec20814fed5cce8b20ffa7b6843789f4ee5b6a68f8343011da3f730ebea8f44",
     "role": "student"
   },
   {
     "enrolledCourses": [
-      "CS103",
-      "DR204"
+      "CS101",
+      "DR202"
     ],
+    "completedLessons": [],
     "progress": [
       {
         "courseId": "DR202",
@@ -124,14 +118,6 @@
         "completed": false
       }
     ],
-    "certificates": [
-      {
-        "issueDate": "2025-11-21",
-        "studentId": 3446,
-        "courseId": "DR202",
-        "certificateId": "CERT_DR202_3446_001"
-      }
-    ],
     "userId": 3446,
     "username": "Nour",
     "email": "nour123@gmail.com",
@@ -142,8 +128,8 @@
     "enrolledCourses": [
       "CS101"
     ],
+    "completedLessons": [],
     "progress": [],
-    "certificates": [],
     "userId": 3476,
     "username": "student",
     "email": "dsa@sad.das",
@@ -206,7 +192,7 @@
         "date": "2025-11-20"
       },
       {
-        "courseId": "DR202",
+        "courseId": "DR204",
         "action": "REJECTED",
         "date": "2025-11-21"
       }

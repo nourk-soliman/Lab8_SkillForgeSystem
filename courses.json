@@ -64,6 +64,107 @@
     "approvalStatus": "APPROVED"
   },
   {
+    "courseId": "CS103",
+    "title": "Java Programming",
+    "instructorId": 9667,
+    "description": "A comprehensive course on Java programming language and object-oriented concepts.",
+    "lessons": [
+      {
+        "lessonId": "java1",
+        "title": "Introduction to Java",
+        "content": "This lesson covers the basics of Java programming, including setting up the development environment and writing your first Java program.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/getStarted/index.html",
+          "https://www.w3schools.com/java/java_intro.asp"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "What is the file extension for a Java source file?",
+              "answerIndex": 1,
+              "options": [
+                ".py",
+                ".java",
+                ".class",
+                ".jar"
+              ]
+            },
+            {
+              "question": "Which keyword is used to define a class in Java?",
+              "answerIndex": 0,
+              "options": [
+                "class",
+                "interface",
+                "object",
+                "type"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "java2",
+        "title": "Object-Oriented Programming",
+        "content": "This lesson explains the fundamental concepts of object-oriented programming in Java including classes, objects, and inheritance.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/java/concepts/",
+          "https://www.geeksforgeeks.org/object-oriented-programming-oops-concept-in-java/"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "Which OOP concept allows one class to inherit features from another class?",
+              "answerIndex": 2,
+              "options": [
+                "Polymorphism",
+                "Encapsulation",
+                "Inheritance",
+                "Abstraction"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "java3",
+        "title": "Exception Handling",
+        "content": "This lesson covers how to handle exceptions and errors in Java programs using try-catch blocks.",
+        "optionalResources": [
+          "https://docs.oracle.com/javase/tutorial/essential/exceptions/",
+          "https://www.javatpoint.com/exception-handling-in-java"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "Which keyword is used to explicitly throw an exception?",
+              "answerIndex": 1,
+              "options": [
+                "catch",
+                "throw",
+                "throws",
+                "exception"
+              ]
+            },
+            {
+              "question": "What is the parent class of all exceptions in Java?",
+              "answerIndex": 0,
+              "options": [
+                "Throwable",
+                "Exception",
+                "Error",
+                "RuntimeException"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      }
+    ],
+    "approvalStatus": "APPROVED"
+  },
+  {
     "courseId": "DR202",
     "title": "Learn how to drive",
     "instructorId": 9657,
@@ -115,7 +216,88 @@
         }
       }
     ],
-    "approvalStatus": "PENDING"
+    "approvalStatus": "APPROVED"
+  },
+  {
+    "courseId": "DR204",
+    "title": "Advanced Driving Techniques",
+    "instructorId": 9667,
+    "description": "An advanced course covering defensive driving, highway driving, and emergency maneuvers.",
+    "lessons": [
+      {
+        "lessonId": "adv1",
+        "title": "Defensive Driving Strategies",
+        "content": "This lesson covers advanced defensive driving techniques to anticipate and avoid potential hazards on the road.",
+        "optionalResources": [
+          "https://www.nsc.org/road-safety/safety-topics/defensive-driving",
+          "https://www.aaa.com/AAA/common/aar/files/AAA-Defensive-Driving.pdf"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "What is the recommended following distance in good weather conditions?",
+              "answerIndex": 1,
+              "options": [
+                "1 second",
+                "3 seconds",
+                "5 seconds",
+                "7 seconds"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "adv2",
+        "title": "Highway and Freeway Driving",
+        "content": "This lesson focuses on safe techniques for merging, lane changes, and navigating high-speed roads.",
+        "optionalResources": [
+          "https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/freeway-driving/",
+          "https://www.safemotorist.com/articles/highway_driving.aspx"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "When merging onto a highway, what should you do?",
+              "answerIndex": 2,
+              "options": [
+                "Stop and wait for an opening",
+                "Merge immediately without checking",
+                "Adjust your speed to match traffic and merge smoothly",
+                "Use the shoulder to merge"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      },
+      {
+        "lessonId": "adv3",
+        "title": "Emergency Maneuvers",
+        "content": "This lesson teaches how to handle emergency situations like skids, brake failure, and obstacle avoidance.",
+        "optionalResources": [
+          "https://www.drivingtests.co.nz/roadcode/car/theory/emergency-driving/",
+          "https://www.rac.co.uk/drive/advice/learning-to-drive/how-to-deal-with-driving-emergencies/"
+        ],
+        "quiz": {
+          "questions": [
+            {
+              "question": "If your vehicle starts to skid, what should you do?",
+              "answerIndex": 0,
+              "options": [
+                "Steer in the direction you want to go",
+                "Brake hard immediately",
+                "Accelerate to regain control",
+                "Turn the steering wheel back and forth rapidly"
+              ]
+            }
+          ],
+          "retryPolicy": "unlimited"
+        }
+      }
+    ],
+    "approvalStatus": "REJECTED"
   },
   {
     "courseId": "cce",
