@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.course.CourseProgress;
+import model.course.LessonProgress;
 
 /**
  *
@@ -53,54 +55,79 @@ public class CompleteLesson extends javax.swing.JFrame {
         jLabel3.setText("Progress: Select a course");
     }
 
-    private void loadLessons() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
+private void loadLessons() {
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0);  // Clear table
 
-        String selectedItem = (String) jComboBox1.getSelectedItem();
-        if (selectedItem == null || selectedItem.equals("Select a Course")) {
-            jLabel3.setText("Progress: Select a course");
-            return;
-        }
+    String selectedItem = (String) jComboBox1.getSelectedItem();
+    if (selectedItem == null || selectedItem.equals("Select a Course")) {
+        jLabel3.setText("Progress: Select a course");
+        return;
+    }
 
-        String courseId = selectedItem.split(" - ")[0];
+    String courseId = selectedItem.split(" - ")[0];
 
-        StudentRole sr = new StudentRole();
-        List<Course> allCourses = sr.viewCourses(s);
+    // Get all courses for the student
+    StudentRole sr = new StudentRole();
+    List<Course> allCourses = sr.viewCourses(s);
 
-        for (Course course : allCourses) {
-            if (course.getCourseId().equals(courseId)) {
-                int totalLessons = course.getLessons().size();
-                int completedLessons = countCompletedLessons(courseId);
-                
-                // Calculate and display progress
-                double progress = totalLessons > 0 ? (completedLessons * 100.0) / totalLessons : 0;
-                jLabel3.setText(String.format("Progress: %d/%d lessons completed (%.1f%%)", 
-                        completedLessons, totalLessons, progress));
-                
-                for (Lesson lesson : course.getLessons()) {
-                    String contentPreview = lesson.getContent();
-                    if (contentPreview.length() > 50) {
-                        contentPreview = contentPreview.substring(0, 50) + "...";
-                    }
-                    
-                    // Check if lesson is completed
-                    boolean isCompleted = isLessonCompleted(courseId, lesson.getLessonId());
-                    String status = isCompleted ? "✓ Completed" : "Not Started";
-
-                    model.addRow(new Object[] {
-    // 
-                            lesson.getLessonId(),
-                            lesson.getTitle(),
-                            contentPreview,
-                            lesson.getOptionalResources().size(),
-                            status
-                    });
-                }
-                break;
-            }
+    // Find the selected course
+    Course selectedCourse = null;
+    for (Course course : allCourses) {
+        if (course.getCourseId().equals(courseId)) {
+            selectedCourse = course;
+            break;
         }
     }
+
+    if (selectedCourse == null) {
+        jLabel3.setText("Course not found");
+        return;
+    }
+
+    // Calculate completed lessons for progress
+    int totalLessons = selectedCourse.getLessons().size();
+    int completedLessons = countCompletedLessons(courseId);
+    double progress = totalLessons > 0 ? (completedLessons * 100.0) / totalLessons : 0;
+    jLabel3.setText(String.format("Progress: %d/%d lessons completed (%.1f%%)", 
+            completedLessons, totalLessons, progress));
+
+    // Loop through lessons and populate table
+    for (Lesson lesson : selectedCourse.getLessons()) {
+
+        // Get a content preview
+        String contentPreview = lesson.getContent();
+        if (contentPreview.length() > 50) {
+            contentPreview = contentPreview.substring(0, 50) + "...";
+        }
+
+        // Default status
+        String status = "incomplete";
+
+        // Check student progress for this course & lesson
+        for (CourseProgress cp : s.getProgress()) {
+            if (!cp.getCourseId().equals(courseId)) continue; // Only check the current course
+
+            for (LessonProgress lp : cp.getLessonProgress()) {
+                if (lp.getLessonId().equals(lesson.getLessonId())) {
+                    if(lp.isCompleted())
+                    status = lp.isCompleted() ? "completed" : "incomplete";
+                    break; 
+                }
+            }
+        }
+
+        // Add row to table
+        model.addRow(new Object[] {
+            lesson.getLessonId(),
+            lesson.getTitle(),
+            contentPreview,
+            lesson.getOptionalResources().size(),
+            status
+        });
+    }
+}
+
     
     private boolean isLessonCompleted(String courseId, String lessonId) {
         if (s.getCompletedLessons() == null) {
@@ -123,7 +150,7 @@ public class CompleteLesson extends javax.swing.JFrame {
         return count;
     }
     
-    private void markLessonAsComplete() {
+    /*private void markLessonAsComplete() {
         int selectedRow = jTable1.getSelectedRow();
 
         if (selectedRow == -1) {
@@ -197,7 +224,7 @@ public class CompleteLesson extends javax.swing.JFrame {
 
         userReader.setStudents(students);
         userReader.saveToFile("users.json");
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -216,7 +243,6 @@ public class CompleteLesson extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -259,15 +285,6 @@ public class CompleteLesson extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Select Course :");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 153, 0));
-        jButton1.setText("Mark as Complete");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setText("View Lesson Details");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -309,11 +326,9 @@ public class CompleteLesson extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(103, 103, 103)
                         .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(130, 130, 130)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +344,7 @@ public class CompleteLesson extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 335, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -346,12 +361,10 @@ public class CompleteLesson extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -435,11 +448,6 @@ public class CompleteLesson extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-         markLessonAsComplete();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         loadLessons();
@@ -447,60 +455,102 @@ public class CompleteLesson extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int selectedRow = jTable1.getSelectedRow();
+      int selectedRow = jTable1.getSelectedRow();
 
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a lesson first", "No Selection",
-                JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    String lessonId = (String) jTable1.getValueAt(selectedRow, 0);
-    String lessonTitle = (String) jTable1.getValueAt(selectedRow, 1);
-    String selectedItem = (String) jComboBox1.getSelectedItem();
-    String courseId = selectedItem.split(" - ")[0];
-
-    // **تحقق إذا الدرس مكتمل**
-    String lessonKey = courseId + ":" + lessonId;
-    if (s.getCompletedLessons() == null || !s.getCompletedLessons().contains(lessonKey)) {
-        JOptionPane.showMessageDialog(this, 
-            "You must complete the lesson before taking the quiz.", 
-            "Lesson Not Completed", 
+if (selectedRow == -1) {
+    JOptionPane.showMessageDialog(this, "Please select a lesson first", "No Selection",
             JOptionPane.WARNING_MESSAGE);
-        return;
+    return;
+}
+
+String lessonId = (String) jTable1.getValueAt(selectedRow, 0);
+/*String lessonTitle = (String) jTable1.getValueAt(selectedRow, 1);*/
+String selectedItem = (String) jComboBox1.getSelectedItem();
+String courseId = selectedItem.split(" - ")[0];
+
+// Get all courses for the student
+StudentRole sr = new StudentRole();
+List<Course> allCourses = sr.viewCourses(s);
+
+// Find the selected course
+Course selectedCourse = null;
+for (Course course : allCourses) {
+    if (course.getCourseId().equals(courseId)) {
+        selectedCourse = course;
+        break;
     }
+}
 
-    StudentRole sr = new StudentRole();
-    List<Course> allCourses = sr.viewCourses(s);
+if (selectedCourse == null) {
+    JOptionPane.showMessageDialog(this, "Course not found!", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
 
-    Lesson selectedLesson = null;
+// Find the selected lesson and its index in the course
+List<Lesson> lessons = selectedCourse.getLessons();
+int currentLessonIndex = -1;
+Lesson selectedLesson = null;
+for (int i = 0; i < lessons.size(); i++) {
+    if (lessons.get(i).getLessonId().equals(lessonId)) {
+        currentLessonIndex = i;
+        selectedLesson = lessons.get(i);
+        break;
+    }
+}
 
-    for (Course course : allCourses) {
-        if (course.getCourseId().equals(courseId)) {
-            for (Lesson lesson : course.getLessons()) {
-                if (lesson.getLessonId().equals(lessonId)) {
-                    selectedLesson = lesson;
-                    break;
+if (selectedLesson == null) {
+    JOptionPane.showMessageDialog(this, "Lesson not found!", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+// Check if all previous lessons are completed
+if (currentLessonIndex >= 0) {
+    // Check using progress structure instead of completedLessons
+    boolean isCurrentLessonCompleted = isLessonCompleted(s, courseId, selectedLesson.getLessonId());
+    
+    // Check if current lesson is already completed
+    if (isCurrentLessonCompleted) {
+        JOptionPane.showMessageDialog(this,
+                "This lesson has already been completed. You cannot retake the quiz.",
+                "Lesson Already Completed",
+                JOptionPane.WARNING_MESSAGE);
+        return; 
+    }
+    
+    // Check previous lessons
+    for (int i = 0; i < currentLessonIndex; i++) {
+        String prevLessonId = lessons.get(i).getLessonId();
+        if (!isLessonCompleted(s, courseId, prevLessonId)) {
+            JOptionPane.showMessageDialog(this,
+                    "You must complete all previous lessons before taking this quiz.",
+                    "Previous Lessons Not Completed",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    }
+}
+
+// Open QuizPage
+this.dispose();
+new QuizPage(s, selectedLesson).setVisible(true);
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+private boolean isLessonCompleted(Student student, String courseId, String lessonId) {
+    for (CourseProgress progress : student.getProgress()) {
+        if (progress.getCourseId().equals(courseId)) {
+            for (LessonProgress lessonProgress : progress.getLessonProgress()) {
+                if (lessonProgress.getLessonId().equals(lessonId) && lessonProgress.isCompleted()) {
+                    return true;
                 }
             }
         }
     }
-
-    if (selectedLesson == null) {
-        JOptionPane.showMessageDialog(this, "Lesson not found!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Open QuizPage and send the Lesson object
-    this.dispose();
-    new QuizPage(s, selectedLesson).setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
+    return false;
+}
    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
