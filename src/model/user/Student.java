@@ -3,6 +3,7 @@ package model.user;
 import java.util.ArrayList;
 import java.util.List;
 import json.JsonUserDatabase;
+import model.course.Certificate;
 import model.course.CourseProgress;
 
 public class Student extends User {
@@ -10,6 +11,7 @@ public class Student extends User {
     private List<String> enrolledCourses;
     private List<String> completedLessons;
     private List<CourseProgress> progress;
+    private List<Certificate> certificates;
 
     public List<CourseProgress> getProgress() {
         return progress;
