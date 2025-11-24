@@ -3,11 +3,9 @@ package gui.dashboards;
 import gui.instructor.CourseLessonManager;
 import gui.instructor.PerformanceAnalytics;
 import gui.loginAndSignUp.Login;
-import gui.instructor.ViewStudents;
 import model.user.Instructor;
 import logic.authentication.PasswordService;
 import logic.authentication.UserService;
-import javax.swing.JOptionPane;
 
 public class InstructorBoard extends javax.swing.JFrame {
     private Instructor i;
@@ -22,7 +20,6 @@ public class InstructorBoard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         title = new java.awt.Label();
         course = new java.awt.Button();
-        view = new java.awt.Button();
         insights = new java.awt.Button();
         jButton1 = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
@@ -44,15 +41,6 @@ public class InstructorBoard extends javax.swing.JFrame {
             }
         });
 
-        view.setBackground(new java.awt.Color(204, 255, 255));
-        view.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18));
-        view.setLabel("View Students");
-        view.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewActionPerformed(evt);
-            }
-        });
-
         insights.setBackground(new java.awt.Color(204, 255, 255));
         insights.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 16));
         insights.setLabel("Performance Insights");
@@ -70,10 +58,10 @@ public class InstructorBoard extends javax.swing.JFrame {
             }
         });
 
-        logoutButton.setFont(new java.awt.Font("Segoe UI Black", 0, 14));
-        logoutButton.setText("Logout");
         logoutButton.setBackground(new java.awt.Color(255, 102, 102));
-        logoutButton.setForeground(java.awt.Color.WHITE);
+        logoutButton.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        logoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logoutButton.setText("Logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
@@ -89,38 +77,34 @@ public class InstructorBoard extends javax.swing.JFrame {
                                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 300,
                                         javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(70, 70, 70)
-                                .addComponent(view, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
+                                .addGap(150, 150, 150)
                                 .addComponent(course, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
+                                .addGap(50, 50, 50)
                                 .addComponent(insights, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
                                         javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115,
+                                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115,
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)));
+                                .addGap(20, 20, 20)));
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE,
                                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
+                                .addGap(80, 80, 80)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(view, javax.swing.GroupLayout.PREFERRED_SIZE, 110,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(course, javax.swing.GroupLayout.PREFERRED_SIZE, 110,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(insights, javax.swing.GroupLayout.PREFERRED_SIZE, 110,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(70, 70, 70)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120,
+                                        Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,24 +149,19 @@ public class InstructorBoard extends javax.swing.JFrame {
         new CourseLessonManager(i).setVisible(true);
     }
 
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {
-        this.dispose();
-        new ViewStudents(i).setVisible(true);
-    }
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
     }
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        int confirm = JOptionPane.showConfirmDialog(
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
                 this,
                 "Are you sure you want to logout?",
                 "Confirm Logout",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
+                javax.swing.JOptionPane.YES_NO_OPTION,
+                javax.swing.JOptionPane.QUESTION_MESSAGE);
 
-        if (confirm == JOptionPane.YES_OPTION) {
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             this.dispose();
             PasswordService passwordService = new PasswordService();
             UserService userService = new UserService(passwordService);
@@ -193,8 +172,7 @@ public class InstructorBoard extends javax.swing.JFrame {
     private java.awt.Button course;
     private java.awt.Button insights;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton logoutButton;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton logoutButton;
     private java.awt.Label title;
-    private java.awt.Button view;
 }

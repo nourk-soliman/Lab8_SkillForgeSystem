@@ -74,15 +74,15 @@ public class CourseLessonManager extends javax.swing.JFrame {
                 coursesTable.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object[][] {},
                                 new String[] {
-                                                "Course ID", "Title", "Description", "Students", "Lessons"
+                                                "Course ID", "Title", "Description", "Students", "Lessons", "Status"
                                 }) {
                         Class[] types = new Class[] {
                                         java.lang.String.class, java.lang.String.class, java.lang.String.class,
                                         java.lang.Integer.class,
-                                        java.lang.Integer.class
+                                        java.lang.Integer.class, java.lang.String.class
                         };
                         boolean[] canEdit = new boolean[] {
-                                        false, false, false, false, false
+                                        false, false, false, false, false, false
                         };
 
                         public Class getColumnClass(int columnIndex) {
@@ -608,12 +608,16 @@ public class CourseLessonManager extends javax.swing.JFrame {
                 model.setRowCount(0);
 
                 for (Course course : instructorCourses) {
+                        // Get status as string
+                        String status = course.getApprovalStatus().toString();
+
                         model.addRow(new Object[] {
                                         course.getCourseId(),
                                         course.getTitle(),
                                         course.getDescription(),
                                         course.getStudents().size(),
-                                        course.getLessons().size()
+                                        course.getLessons().size(),
+                                        status // Add status column
                         });
                 }
                 refreshCourseComboBox();
