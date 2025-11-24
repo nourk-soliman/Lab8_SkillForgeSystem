@@ -300,51 +300,74 @@
     "approvalStatus": "REJECTED"
   },
   {
-    "courseId": "cce",
-    "title": "ds",
+    "courseId": "CS2417",
+    "title": "ccccc",
     "instructorId": 3640,
-    "description": "sd",
+    "description": "sdfsdf",
     "lessons": [
       {
-        "lessonId": "dsf",
-        "title": "sdf",
-        "content": "dsf",
-        "optionalResources": [],
+        "lessonId": "CS2417_L01",
+        "title": "asdads",
+        "content": "asdasd",
+        "optionalResources": [
+          "dasasd"
+        ],
         "quiz": {
           "questions": [
             {
-              "question": "name",
-              "answerIndex": 2,
+              "question": "How many fundamentals are there?",
+              "answerIndex": 1,
               "options": [
-                "assa",
-                "asas",
-                "asas",
-                "asas"
+                "one.",
+                "two."
               ]
             }
           ],
-          "retryPolicy": "unlimited"
+          "retryPolicy": "unlimited."
         }
       },
       {
-        "lessonId": "dfs",
-        "title": "dsf",
-        "content": "dsf",
-        "optionalResources": [],
+        "lessonId": "CS2417_L02",
+        "title": "sdffds",
+        "content": "sdf",
+        "optionalResources": [
+          "dfs"
+        ],
         "quiz": {
           "questions": [
             {
-              "question": "esmak eh",
+              "question": "How many fundamentals are there?",
               "answerIndex": 1,
               "options": [
-                "moaz",
-                "refaat",
-                "ali"
+                "one.",
+                "two."
               ]
             }
           ],
-          "retryPolicy": "unlimited"
+          "retryPolicy": "unlimited."
         }
+      }
+    ],
+    "students": [],
+    "approvalStatus": "PENDING"
+  },
+  {
+    "courseId": "CS8884",
+    "title": "sdasda",
+    "instructorId": 3640,
+    "description": "dasdas",
+    "lessons": [
+      {
+        "lessonId": "CS8884_L01",
+        "title": "sdadasads",
+        "content": "sdasda",
+        "optionalResources": []
+      },
+      {
+        "lessonId": "CS8884_L01",
+        "title": "adsdsa",
+        "content": "sdasdasda",
+        "optionalResources": []
       }
     ],
     "students": [],

@@ -7,6 +7,7 @@ import gui.instructor.ViewStudents;
 import model.user.Instructor;
 import logic.authentication.PasswordService;
 import logic.authentication.UserService;
+import javax.swing.JOptionPane;
 
 public class InstructorBoard extends javax.swing.JFrame {
     private Instructor i;
@@ -24,6 +25,7 @@ public class InstructorBoard extends javax.swing.JFrame {
         view = new java.awt.Button();
         insights = new java.awt.Button();
         jButton1 = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,6 +70,16 @@ public class InstructorBoard extends javax.swing.JFrame {
             }
         });
 
+        logoutButton.setFont(new java.awt.Font("Segoe UI Black", 0, 14));
+        logoutButton.setText("Logout");
+        logoutButton.setBackground(new java.awt.Color(255, 102, 102));
+        logoutButton.setForeground(java.awt.Color.WHITE);
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -88,6 +100,9 @@ public class InstructorBoard extends javax.swing.JFrame {
                                         javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)));
@@ -106,8 +121,11 @@ public class InstructorBoard extends javax.swing.JFrame {
                                         .addComponent(insights, javax.swing.GroupLayout.PREFERRED_SIZE, 110,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(70, 70, 70)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(20, 20, 20)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,9 +174,26 @@ public class InstructorBoard extends javax.swing.JFrame {
         System.exit(0);
     }
 
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to logout?",
+                "Confirm Logout",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.dispose();
+            PasswordService passwordService = new PasswordService();
+            UserService userService = new UserService(passwordService);
+            new Login(userService).setVisible(true);
+        }
+    }
+
     private java.awt.Button course;
     private java.awt.Button insights;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JPanel jPanel1;
     private java.awt.Label title;
     private java.awt.Button view;

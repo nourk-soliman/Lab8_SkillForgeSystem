@@ -3,6 +3,7 @@
     "enrolledCourses": [
       "CS101"
     ],
+    "completedLessons": [],
     "progress": [
       {
         "courseId": "CS101",
@@ -27,6 +28,7 @@
         "completed": true
       }
     ],
+    "certificates": [],
     "userId": 1234,
     "username": "Salma",
     "email": "mss12@gmail.com",
@@ -38,7 +40,7 @@
       "CS101",
       "DR202"
     ],
-    
+    "completedLessons": [],
     "progress": [
       {
         "courseId": "CS101",
@@ -81,6 +83,7 @@
         "completed": false
       }
     ],
+    "certificates": [],
     "userId": 3456,
     "username": "Samer",
     "email": "samer123@gmail.com",
@@ -92,7 +95,7 @@
       "CS101",
       "DR202"
     ],
-    
+    "completedLessons": [],
     "progress": [
       {
         "courseId": "DR202",
@@ -117,6 +120,7 @@
         "completed": false
       }
     ],
+    "certificates": [],
     "userId": 3446,
     "username": "Nour",
     "email": "nour123@gmail.com",
@@ -127,8 +131,9 @@
     "enrolledCourses": [
       "CS101"
     ],
-   
+    "completedLessons": [],
     "progress": [],
+    "certificates": [],
     "userId": 3476,
     "username": "student",
     "email": "dsa@sad.das",
@@ -175,7 +180,8 @@
   },
   {
     "createdCourses": [
-      "cce"
+      "CS2417",
+      "CS8884"
     ],
     "userId": 3640,
     "username": "moaz",
@@ -195,12 +201,12 @@
         "action": "REJECTED",
         "date": "2025-11-21"
       },
-       {
+      {
         "courseId": "CS101",
         "action": "APPROVED",
         "date": "2025-11-20"
       },
-       {
+      {
         "courseId": "DR202",
         "action": "APPROVED",
         "date": "2025-11-20"

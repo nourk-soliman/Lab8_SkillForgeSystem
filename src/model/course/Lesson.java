@@ -22,33 +22,24 @@ public class Lesson {
     private Quiz quiz;
 
     public Lesson(String lessonId, String title, String content, List<String> optionalResources, Quiz quiz) {
-     
-        setLessonId(lessonId);
-       
+        // IMPORTANT: Don't validate here - validation should be done before creating
+        // the lesson
+        this.lessonId = lessonId;
         this.title = title;
         this.content = content;
         this.optionalResources = optionalResources;
-        this.quiz=quiz;
+        this.quiz = quiz;
     }
 
     public String getLessonId() {
         return lessonId;
     }
 
- public void setLessonId(String lessonId) {
-
-    JsonCoursesDatabase r = new JsonCoursesDatabase("courses.json");
-    List<Lesson> lessons = r.getLessons();
-
-    for (Lesson lesson : lessons) {
-        if (lesson.getLessonId() != null && lesson.getLessonId().equals(lessonId)) {
-            System.out.println("Lesson ID must be unique.");
-            return;
-        }
+    // FIXED: Removed validation from setter - it was causing problems
+    // Validation should be done in InstructorRole before creating the lesson
+    public void setLessonId(String lessonId) {
+        this.lessonId = lessonId;
     }
-
-    this.lessonId = lessonId;
-}
 
     public String getTitle() {
         return title;
@@ -73,38 +64,37 @@ public class Lesson {
     public void setOptionalResources(List<String> optionalResources) {
         this.optionalResources = optionalResources;
     }
-    
-    public Quiz getQuiz()
-    {return quiz;}
-    
-   public void setQuiz(Quiz quiz)
-   {this.quiz=quiz;}
-   
-    public void displayInfo()
-    { System.out.println("=== Lesson Info ===");
-        
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    // Check if lesson has a quiz
+    public boolean hasQuiz() {
+        return quiz != null && quiz.getQuestions() != null && !quiz.getQuestions().isEmpty();
+    }
+
+    // Helper method to get total questions
+    public int getTotalQuestions() {
+        if (!hasQuiz()) {
+            return 0;
+        }
+        return quiz.getQuestions().size();
+    }
+
+    public void displayInfo() {
+        System.out.println("=== Lesson Info ===");
         System.out.println("LessonId: " + lessonId);
         System.out.println("Lesson title: " + title);
         System.out.println("Lesson content: " + content);
-        for(String r:optionalResources)
-        System.out.println("Lesson resources: " + r);
+        for (String r : optionalResources) {
+            System.out.println("Lesson resources: " + r);
+        }
+        System.out.println("Has Quiz: " + hasQuiz());
         System.out.println("======================");
-    
-    
-    
-    
-    
     }
-    
-    /*public static void main(String[] args) {
-        CoursesDatabase r=new CoursesDatabase("courses.json");
-    List<Lesson>l=r.getLessons();
-       for(Lesson lesson:l)
-           lesson.displayInfo();
-       List<String>opt=new ArrayList<>();
-       opt.add("blbalala");
-       l.add(new Lesson("dt1","Nour","That's me",opt)); 
-       for(Lesson lesson:l)
-           lesson.displayInfo();
-    }*/
 }
