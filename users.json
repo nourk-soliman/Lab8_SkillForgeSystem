@@ -47,6 +47,41 @@
     "role": "student"
   },
   {
+    "enrolledCourses": [
+      "CS5024"
+    ],
+    "completedLessons": [],
+    "progress": [
+      {
+        "courseId": "CS5024",
+        "lessonProgress": [
+          {
+            "lessonId": "CS5024_L01",
+            "quizScore": 0.0,
+            "completed": false,
+            "attempts": [
+              {
+                "quizScore": 0.0
+              }
+            ]
+          },
+          {
+            "lessonId": "CS5024_L02",
+            "quizScore": 0.0,
+            "completed": false,
+            "attempts": []
+          }
+        ],
+        "completed": false
+      }
+    ],
+    "userId": 1283,
+    "username": "studentt",
+    "email": "sdcf@ddsf.sdff",
+    "passwordHash": "9874d38de575fe17cc1201d7e7dc2fdd6e5b1c83f3fe43909257009a9073c63c",
+    "role": "student"
+  },
+  {
     "createdCourses": [
       "CS5024"
     ],
