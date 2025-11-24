@@ -5,7 +5,9 @@
 package gui.instructor;
 
 import model.course.Course;
+import model.course.CourseProgress;
 import model.course.Lesson;
+import model.course.LessonProgress;
 import model.user.Instructor;
 import model.user.Student;
 import logic.userRole.InstructorRole;
@@ -426,40 +428,63 @@ public class Charts extends JFrame {
 
     // Calculate average quiz score for a student across all lessons
     private double calculateAverageScore(Student student) {
-        if (student.getQuizResults() == null) {
+        if (student.getProgress() == null) {
             return 0.0;
         }
 
-        Map<String, Integer> quizResults = student.getQuizResults();
-        int totalScore = 0;
+        double totalScore = 0;
         int quizCount = 0;
 
-        for (String quizKey : quizResults.keySet()) {
-            if (quizKey.startsWith(course.getCourseId() + ":")) {
-                totalScore += quizResults.get(quizKey);
-                quizCount++;
+        // FIXED: Calculate from progress structure
+        for (CourseProgress cp : student.getProgress()) {
+            if (cp.getCourseId().equals(course.getCourseId())) {
+                for (LessonProgress lp : cp.getLessonProgress()) {
+                    if (lp.getQuizScore() > 0) {
+                        totalScore += lp.getQuizScore();
+                        quizCount++;
+                    }
+                }
             }
         }
 
-        return quizCount > 0 ? (double) totalScore / quizCount : 0.0;
+        return quizCount > 0 ? totalScore / quizCount : 0.0;
     }
 
     // Check if a specific lesson is completed by a student
     private boolean isLessonCompleted(Student student, String courseId, String lessonId) {
-        if (student.getCompletedLessons() == null) {
+        if (student.getProgress() == null) {
             return false;
         }
-        String lessonKey = courseId + ":" + lessonId;
-        return student.getCompletedLessons().contains(lessonKey);
+
+        // FIXED: Check the progress structure
+        for (CourseProgress cp : student.getProgress()) {
+            if (cp.getCourseId().equals(courseId)) {
+                for (LessonProgress lp : cp.getLessonProgress()) {
+                    if (lp.getLessonId().equals(lessonId) && lp.isCompleted()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     // Get quiz score for a specific lesson
     private Double getQuizScore(Student student, String courseId, String lessonId) {
-        if (student.getQuizResults() == null) {
+        if (student.getProgress() == null) {
             return null;
         }
-        String quizKey = courseId + ":" + lessonId;
-        Integer score = student.getQuizResults().get(quizKey);
-        return score != null ? score.doubleValue() : null;
+
+        // FIXED: Check progress structure instead of quizResults
+        for (CourseProgress cp : student.getProgress()) {
+            if (cp.getCourseId().equals(courseId)) {
+                for (LessonProgress lp : cp.getLessonProgress()) {
+                    if (lp.getLessonId().equals(lessonId)) {
+                        return (double) lp.getQuizScore();
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

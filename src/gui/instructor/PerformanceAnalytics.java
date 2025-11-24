@@ -4,7 +4,9 @@ import gui.dashboards.InstructorBoard;
 import json.JsonCoursesDatabase;
 import json.JsonUserDatabase;
 import model.course.Course;
+import model.course.CourseProgress;
 import model.course.Lesson;
+import model.course.LessonProgress;
 import model.user.Instructor;
 import model.user.Student;
 import model.analytics.StudentPerformance;
@@ -198,6 +200,8 @@ public class PerformanceAnalytics extends javax.swing.JFrame {
         int activeStudents = 0;
         int lessonsWithQuiz = 0;
         double totalCompletion = 0;
+        double totalQuizScore = 0;
+        int quizScoreCount = 0;
 
         // Count lessons with quizzes
         for (Lesson lesson : course.getLessons()) {
@@ -215,10 +219,23 @@ public class PerformanceAnalytics extends javax.swing.JFrame {
             if (totalLessons > 0) {
                 totalCompletion += (completed * 100.0) / totalLessons;
             }
-        }
 
+            // Calculate average quiz score
+            if (student.getProgress() != null) {
+                for (CourseProgress cp : student.getProgress()) {
+                    if (cp.getCourseId().equals(courseId)) {
+                        for (LessonProgress lp : cp.getLessonProgress()) {
+                            if (lp.getQuizScore() > 0) {
+                                totalQuizScore += lp.getQuizScore();
+                                quizScoreCount++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         double avgCompletion = totalStudents > 0 ? totalCompletion / totalStudents : 0;
-        double avgScore = 0; // Would need quiz attempt data
+        double avgScore = quizScoreCount > 0 ? totalQuizScore / quizScoreCount : 0;
 
         totalStudentsLabel.setText("Total Enrolled: " + totalStudents);
         avgCompletionLabel.setText(String.format("Avg Completion: %.1f%%", avgCompletion));
@@ -609,15 +626,20 @@ public class PerformanceAnalytics extends javax.swing.JFrame {
     }
 
     private int countCompletedLessons(Student student, String courseId) {
-        if (student.getCompletedLessons() == null) {
-            return 0;
-        }
-
         int count = 0;
-        String prefix = courseId + ":";
-        for (String completedLesson : student.getCompletedLessons()) {
-            if (completedLesson.startsWith(prefix)) {
-                count++;
+
+        if (student.getProgress() == null)
+            return 0;
+
+        // FIXED: Check the progress structure instead of completedLessons
+        for (CourseProgress cp : student.getProgress()) {
+            if (cp.getCourseId().equals(courseId)) {
+                for (LessonProgress lp : cp.getLessonProgress()) {
+                    if (lp.isCompleted()) {
+                        count++;
+                    }
+                }
+                break; // Found the course, no need to continue
             }
         }
         return count;
